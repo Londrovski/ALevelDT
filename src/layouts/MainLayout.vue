@@ -6,7 +6,8 @@
         <q-toolbar-title>
           <router-link to="/" class="jm-brand">
             <img src="/images/site-logo.png" class="jm-logo" alt="JM" />
-            <span class="jm-brand-name gt-sm">James Morris</span>
+            <!-- On mobile show name next to logo -->
+            <span class="jm-brand-name">James Morris</span>
           </router-link>
         </q-toolbar-title>
         <div class="row q-gutter-sm gt-sm items-center">
@@ -22,7 +23,7 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn flat no-caps to="/flipbooks" label="Sketchbook" class="jm-nav-btn" />
+          <q-btn flat no-caps to="/sketchbook" label="Sketchbook" class="jm-nav-btn" />
           <q-btn flat no-caps to="/photos" label="Pictures" class="jm-nav-btn" />
           <q-btn flat no-caps to="/videos" label="Videos" class="jm-nav-btn" />
         </div>
@@ -61,7 +62,7 @@
           <q-item-section>Attachments</q-item-section>
         </q-item>
         <q-item-label header class="jm-drawer-header">Documents & Media</q-item-label>
-        <q-item clickable v-ripple to="/flipbooks" class="jm-drawer-item">
+        <q-item clickable v-ripple to="/sketchbook" class="jm-drawer-item">
           <q-item-section avatar><q-icon name="menu_book" /></q-item-section>
           <q-item-section>Sketchbook</q-item-section>
         </q-item>
@@ -91,13 +92,21 @@ function toggleLeftDrawer () { leftDrawerOpen.value = !leftDrawerOpen.value }
 <style scoped>
 .jm-header { background: #333233 !important; border-bottom: none !important; box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important; }
 .jm-toolbar { height: 72px !important; min-height: 72px !important; padding: 0 20px !important; }
+/* Mobile: slimmer toolbar */
+@media (max-width: 860px) {
+  .jm-toolbar { height: 52px !important; min-height: 52px !important; padding: 0 12px !important; }
+}
 .jm-nav-btn { color: rgba(255,255,255,0.85) !important; font-size: 14px !important; font-weight: 500 !important; padding: 8px 14px !important; }
 .jm-nav-btn:hover { color: #ffffff !important; background: rgba(255,255,255,0.08) !important; }
 .jm-nav-btn.router-link-active { color: #32a9b1 !important; }
 .jm-icon-btn { color: #ffffff !important; }
-.jm-brand { display: flex; align-items: center; gap: 20px; text-decoration: none; }
+.jm-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .jm-logo { height: 44px; width: auto; filter: brightness(0) invert(1); }
+/* Mobile: smaller logo */
+@media (max-width: 860px) { .jm-logo { height: 30px; } }
 .jm-brand-name { font-weight: 700; font-size: 35px; color: #ffffff; letter-spacing: 0.01em; }
+/* Mobile: show name, smaller size */
+@media (max-width: 860px) { .jm-brand-name { font-size: 18px !important; display: block !important; } }
 .jm-drawer { background: #ffffff !important; border-right: 1px solid #d8d8d8 !important; }
 .jm-drawer-logo { border-bottom: 1px solid #d8d8d8; }
 .jm-drawer-item { color: #333233 !important; }

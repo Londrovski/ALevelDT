@@ -10,8 +10,6 @@
       </a>
     </div>
     <div class="jm-pdf-embed">
-      <!-- R2 URL → native browser PDF viewer (no size limit, no third-party renderer) -->
-      <!-- Fallback → Google Drive embed -->
       <iframe
         :src="embedSrc"
         class="jm-pdf-iframe"
@@ -23,7 +21,6 @@
 
 <script setup>
 import { computed } from 'vue'
-
 const props = defineProps({
   driveUrl: { type: String, default: '' },
   driveId:  { type: String, default: '' },
@@ -31,12 +28,10 @@ const props = defineProps({
   title:    { type: String, default: '' },
   desc:     { type: String, default: '' },
 })
-
-// R2 URL served directly — Chrome/Firefox/Safari all render PDFs natively in iframes
-// Fall back to Drive embed if no R2 URL provided
+// Append #view=FitH so the PDF fits to width and shows one page at a time
 const embedSrc = computed(() =>
   props.r2Url
-    ? props.r2Url
+    ? props.r2Url + '#view=FitH&toolbar=1&navpanes=0'
     : `https://drive.google.com/file/d/${props.driveId}/preview`
 )
 </script>
@@ -49,5 +44,10 @@ const embedSrc = computed(() =>
 .jm-open-link { font-size: 13px; font-weight: 600; color: #32a9b1; text-decoration: none; white-space: nowrap; margin-left: 16px; display: flex; align-items: center; gap: 4px; }
 .jm-open-link:hover { color: #248d94; }
 .jm-pdf-embed { width: 100%; }
+/* Desktop: tall viewer */
 .jm-pdf-iframe { display: block; width: 100%; height: 82vh; min-height: 600px; border: none; }
+/* Mobile: single-page height — roughly A4 ratio of width */
+@media (max-width: 860px) {
+  .jm-pdf-iframe { height: 52vw; min-height: unset; }
+}
 </style>

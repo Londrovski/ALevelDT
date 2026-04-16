@@ -9,7 +9,9 @@ const routes = [
       { path: 'power-system-3d-view', component: () => import('pages/PowerSystem3D.vue') },
       { path: 'passive-system-3d-view', component: () => import('pages/PassiveSystem3D.vue') },
       { path: 'attachments-3d-view', component: () => import('pages/Attachments3D.vue') },
-      { path: 'flipbooks', component: () => import('pages/FlipbooksPage.vue') },
+      // Canonical URL is now /sketchbook, /flipbooks redirects for back-compat
+      { path: 'sketchbook', component: () => import('pages/FlipbooksPage.vue') },
+      { path: 'flipbooks', redirect: '/sketchbook' },
       { path: 'photos', component: () => import('pages/PhotosPage.vue') },
       { path: 'videos', component: () => import('pages/VideosPage.vue') }
     ]

@@ -14,13 +14,14 @@
           </p>
           <div class="jm-hero-btns">
             <q-btn to="/full-project-3d-view" class="jm-hero-btn-solid" no-caps label="3D Models" icon="view_in_ar" />
-            <q-btn to="/flipbooks" class="jm-hero-btn-outline" no-caps label="Sketchbook" icon="menu_book" outline />
+            <q-btn to="/sketchbook" class="jm-hero-btn-outline" no-caps label="Sketchbook" icon="menu_book" outline />
             <q-btn to="/photos" class="jm-hero-btn-outline" no-caps label="Pictures" icon="photo_library" outline />
             <q-btn class="jm-hero-btn-outline" no-caps label="About Me" icon="person" outline @click="scrollToAbout" />
           </div>
           <div class="jm-hero-credit">JAMES MORRIS</div>
         </div>
-        <div class="jm-hero-banner-right">
+        <!-- Logo hidden on mobile -->
+        <div class="jm-hero-banner-right gt-xs">
           <img src="/images/site-logo.png" class="jm-hero-logomark" alt="JM" />
         </div>
       </div>
@@ -44,6 +45,11 @@
             at A Level and receiving both the DT and Further Maths A Level Prizes at the College,
             I went on to study Mechanical Engineering at the University of Bath.
           </p>
+          <!-- Mobile: photo inserted here between first para and My Project -->
+          <div class="jm-about-photo-mobile">
+            <img src="/images/james-alevel-award.jpg" alt="James Morris" class="jm-about-photo" />
+            <div class="jm-about-photo-caption">Receiving the DT A Level Prize</div>
+          </div>
           <div class="jm-subsection-title">My Project</div>
           <p class="jm-body">
             I looked into a way of converting a standard school desk into a standing desk, for
@@ -106,15 +112,21 @@ function scrollToAbout () {
 
 <style scoped>
 .jm-page { background: #f2f2f2; color: #333233; }
+
+/* ─ HERO ─ */
 .jm-hero {
-  position: relative; width: 100%; height: 92vh; min-height: 560px;
+  position: relative; width: 100%;
+  height: 92vh; min-height: 560px;
   overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
   background: #d0cecc;
 }
+/* Mobile: 70% of 92vh ≈ 64vh */
+@media (max-width: 860px) {
+  .jm-hero { height: 64vh; min-height: 320px; }
+}
 .jm-hero-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: contain;
-  object-position: center 2%;
+  object-fit: contain; object-position: center 2%;
 }
 .jm-hero-vignette {
   position: absolute; inset: 0;
@@ -125,24 +137,56 @@ function scrollToAbout () {
   padding: 28px 48px; display: flex; align-items: center;
   justify-content: space-between; gap: 32px;
 }
+@media (max-width: 860px) {
+  .jm-hero-banner { padding: 16px 20px; gap: 0; }
+}
 .jm-hero-banner-left { flex: 1; min-width: 0; }
-.jm-hero-banner-right { flex-shrink: 0; display: flex; align-items: center; padding-left: 32px; border-left: 1px solid rgba(255,255,255,0.25); }
+.jm-hero-banner-right {
+  flex-shrink: 0; display: flex; align-items: center;
+  padding-left: 32px; border-left: 1px solid rgba(255,255,255,0.25);
+}
 .jm-hero-logomark { height: 80px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
 .jm-hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 6px; }
 .jm-hero-title { font-size: 36px; font-weight: 800; color: #ffffff; margin: 0 0 10px; letter-spacing: -0.02em; line-height: 1.05; }
+@media (max-width: 860px) { .jm-hero-title { font-size: 24px; } }
 .jm-hero-sub { font-size: 15px; color: rgba(255,255,255,0.85); margin: 0 0 18px; max-width: 580px; line-height: 1.6; }
+@media (max-width: 860px) { .jm-hero-sub { font-size: 13px; margin-bottom: 12px; } }
 .jm-hero-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+@media (max-width: 860px) { .jm-hero-btns { gap: 7px; margin-bottom: 10px; } }
 .jm-hero-btn-solid { background: #ffffff !important; color: #32a9b1 !important; font-weight: 700 !important; border-radius: 4px !important; padding: 8px 18px !important; }
 .jm-hero-btn-solid:hover { background: #f0f0f0 !important; }
 .jm-hero-btn-outline { color: #ffffff !important; border-color: rgba(255,255,255,0.65) !important; font-weight: 600 !important; border-radius: 4px !important; padding: 8px 18px !important; }
+@media (max-width: 860px) {
+  .jm-hero-btn-solid, .jm-hero-btn-outline { padding: 6px 12px !important; font-size: 12px !important; }
+}
 .jm-hero-btn-outline:hover { border-color: #fff !important; background: rgba(255,255,255,0.1) !important; }
 .jm-hero-credit { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+
+/* ─ ABOUT ─ */
 .jm-about-section { background: #ffffff; padding: 0 64px; border-bottom: 1px solid #d8d8d8; min-height: 600px; display: flex; align-items: stretch; }
 .jm-about-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: flex; gap: 72px; align-items: center; padding: 72px 0; }
+/* Desktop photo col */
 .jm-about-photo-col { flex-shrink: 0; width: 300px; display: flex; align-items: center; justify-content: center; align-self: center; }
 .jm-about-photo-frame { text-align: center; }
 .jm-about-photo { width: 100%; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); border: 1px solid #d8d8d8; }
 .jm-about-photo-caption { font-size: 13px; color: #7c7c7c; margin-top: 12px; font-style: italic; }
+/* Mobile inline photo — hidden on desktop */
+.jm-about-photo-mobile { display: none; }
+@media (max-width: 860px) {
+  .jm-about-section { padding: 0 20px; min-height: unset; }
+  .jm-about-inner { flex-direction: column; gap: 24px; padding: 40px 0; align-items: flex-start; }
+  /* Hide the desktop sidebar photo col on mobile */
+  .jm-about-photo-col { display: none; }
+  /* Show inline photo between first para and My Project */
+  .jm-about-photo-mobile {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    width: 75%;
+    max-width: 280px;
+  }
+  .jm-about-photo-mobile .jm-about-photo { width: 100%; }
+}
 .jm-about-text-col { flex: 1; min-width: 0; }
 .jm-section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #32a9b1; margin-bottom: 8px; }
 .jm-section-title { font-size: 32px; font-weight: 800; color: #333233; margin: 0 0 24px; letter-spacing: -0.02em; }
@@ -150,17 +194,10 @@ function scrollToAbout () {
 .jm-body { font-size: 15px; line-height: 1.8; color: #555455; margin-bottom: 4px; }
 .jm-about-cta { margin-top: 32px; }
 .jm-btn-outline { color: #32a9b1 !important; border-color: #32a9b1 !important; font-weight: 600 !important; border-radius: 4px !important; }
+
+/* ─ FLIPBOOKS ─ */
 .jm-flipbooks-section { background: #f2f2f2; padding: 64px 64px 80px; }
+@media (max-width: 860px) { .jm-flipbooks-section { padding: 32px 16px 48px; } }
 .jm-flip-intro { max-width: 600px; margin-bottom: 36px; }
 .jm-flipbook-list { display: flex; flex-direction: column; gap: 40px; max-width: 1100px; }
-@media (max-width: 860px) {
-  .jm-about-section { padding: 0 24px; }
-  .jm-about-inner { flex-direction: column; gap: 40px; padding: 48px 0; align-items: flex-start; }
-  .jm-about-photo-col { width: 100%; max-width: 280px; align-self: auto; }
-  .jm-flipbooks-section { padding: 40px 20px 56px; }
-  .jm-hero-banner { padding: 24px; flex-direction: column; align-items: flex-start; gap: 20px; }
-  .jm-hero-banner-right { border-left: none; border-top: 1px solid rgba(255,255,255,0.25); padding-left: 0; padding-top: 20px; }
-  .jm-hero-title { font-size: 26px; }
-  .jm-hero-logomark { height: 56px; }
-}
 </style>
