@@ -87,12 +87,14 @@
           desc="Full design process — research, ideation, development and final design."
           pdfUrl="https://drive.google.com/uc?export=download&id=1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39"
           driveUrl="https://drive.google.com/file/d/1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39/view"
+          driveId="1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39"
         />
         <FlipbookViewer
           title="Manufacturing Pack"
           desc="Component orthographics, renders, and full manufacturing specification."
           pdfUrl="/docs/manufacturing-pack.pdf"
           driveUrl="https://drive.google.com/file/d/1yUyRqo6PfEtlER3tD8t0cVe7HTv1OxFj/view"
+          driveId="1yUyRqo6PfEtlER3tD8t0cVe7HTv1OxFj"
         />
       </div>
     </div>
@@ -111,8 +113,8 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
 .jm-hero {
   position: relative;
   width: 100%;
-  height: 85vh;
-  min-height: 520px;
+  height: 92vh;
+  min-height: 560px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
