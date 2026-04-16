@@ -4,10 +4,12 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/HomePage.vue') },
-      { path: 'about', component: () => import('pages/AboutPage.vue') },
-      { path: 'projects', component: () => import('pages/ProjectsPage.vue') },
-      { path: 'sketchbooks', component: () => import('pages/SketchbooksPage.vue') },
-      { path: 'models', component: () => import('pages/ModelsPage.vue') }
+      { path: 'full-project-3d-view', component: () => import('pages/FullProject3D.vue') },
+      { path: 'control-system-3d-view', component: () => import('pages/ControlSystem3D.vue') },
+      { path: 'power-system-3d-view', component: () => import('pages/PowerSystem3D.vue') },
+      { path: 'passive-system-3d-view', component: () => import('pages/PassiveSystem3D.vue') },
+      { path: 'attachments-3d-view', component: () => import('pages/Attachments3D.vue') },
+      { path: 'videos', component: () => import('pages/VideosPage.vue') }
     ]
   },
   {
