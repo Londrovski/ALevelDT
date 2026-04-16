@@ -12,28 +12,17 @@
         <div class="row q-gutter-sm gt-sm items-center">
           <q-btn flat no-caps to="/" label="Home" class="jm-nav-btn" />
           <q-btn flat no-caps to="/full-project-3d-view" label="Full Project 3D View" class="jm-nav-btn" />
-
-          <!-- Parts dropdown -->
           <q-btn flat no-caps label="Parts 3D View" class="jm-nav-btn" icon-right="expand_more">
             <q-menu>
               <q-list style="min-width:200px; background:#ffffff">
-                <q-item clickable v-close-popup to="/control-system-3d-view">
-                  <q-item-section>Control System</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup to="/power-system-3d-view">
-                  <q-item-section>Power System</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup to="/passive-system-3d-view">
-                  <q-item-section>Passive System</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup to="/attachments-3d-view">
-                  <q-item-section>Attachments</q-item-section>
-                </q-item>
+                <q-item clickable v-close-popup to="/control-system-3d-view"><q-item-section>Control System</q-item-section></q-item>
+                <q-item clickable v-close-popup to="/power-system-3d-view"><q-item-section>Power System</q-item-section></q-item>
+                <q-item clickable v-close-popup to="/passive-system-3d-view"><q-item-section>Passive System</q-item-section></q-item>
+                <q-item clickable v-close-popup to="/attachments-3d-view"><q-item-section>Attachments</q-item-section></q-item>
               </q-list>
             </q-menu>
           </q-btn>
-
-          <q-btn flat no-caps to="/flipbooks" label="Flipbooks" class="jm-nav-btn" />
+          <q-btn flat no-caps to="/flipbooks" label="Sketchbook" class="jm-nav-btn" />
           <q-btn flat no-caps to="/photos" label="Pictures" class="jm-nav-btn" />
           <q-btn flat no-caps to="/videos" label="Videos" class="jm-nav-btn" />
         </div>
@@ -74,7 +63,7 @@
         <q-item-label header class="jm-drawer-header">Documents & Media</q-item-label>
         <q-item clickable v-ripple to="/flipbooks" class="jm-drawer-item">
           <q-item-section avatar><q-icon name="menu_book" /></q-item-section>
-          <q-item-section>Flipbooks</q-item-section>
+          <q-item-section>Sketchbook</q-item-section>
         </q-item>
         <q-item clickable v-ripple to="/photos" class="jm-drawer-item">
           <q-item-section avatar><q-icon name="photo_library" /></q-item-section>
@@ -100,22 +89,9 @@ function toggleLeftDrawer () { leftDrawerOpen.value = !leftDrawerOpen.value }
 </script>
 
 <style scoped>
-.jm-header {
-  background: #333233 !important;
-  border-bottom: none !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important;
-}
-.jm-toolbar {
-  height: 72px !important;
-  min-height: 72px !important;
-  padding: 0 20px !important;
-}
-.jm-nav-btn {
-  color: rgba(255,255,255,0.85) !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  padding: 8px 14px !important;
-}
+.jm-header { background: #333233 !important; border-bottom: none !important; box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important; }
+.jm-toolbar { height: 72px !important; min-height: 72px !important; padding: 0 20px !important; }
+.jm-nav-btn { color: rgba(255,255,255,0.85) !important; font-size: 14px !important; font-weight: 500 !important; padding: 8px 14px !important; }
 .jm-nav-btn:hover { color: #ffffff !important; background: rgba(255,255,255,0.08) !important; }
 .jm-nav-btn.router-link-active { color: #32a9b1 !important; }
 .jm-icon-btn { color: #ffffff !important; }
