@@ -5,8 +5,8 @@
       <h1 class="jm-page-title">The Full Monty</h1>
     </div>
     <div class="jm-viewers-wrap">
-      <STLViewer label="The Full Monty — With Top" url="/models/The-Full-Monty-with-Top-2.stl" />
-      <STLViewer label="The Full Monty — Without Top" url="/models/The-Full-Monty-1.stl" />
+      <STLViewer label="The Full Monty — With Top"    url="/models/The-Full-Monty-with-Top-2.stl" :zoomFactor="0.75" />
+      <STLViewer label="The Full Monty — Without Top" url="/models/The-Full-Monty-1.stl"          :zoomFactor="0.75" />
     </div>
   </q-page>
 </template>
@@ -18,8 +18,7 @@ import STLViewer from 'components/STLViewer.vue'
 <style scoped>
 .jm-3d-page { background: #f2f2f2; min-height: 100vh; }
 .jm-page-header {
-  background: #ffffff;
-  padding: 32px 48px 28px;
+  background: #ffffff; padding: 32px 48px 28px;
   border-bottom: 1px solid #d8d8d8;
 }
 .jm-page-eyebrow {
