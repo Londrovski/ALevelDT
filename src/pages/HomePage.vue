@@ -1,11 +1,9 @@
 <template>
   <q-page class="jm-page">
 
-    <!-- ═══ HERO ═══ -->
     <div class="jm-hero">
       <img src="/images/full-monty-render.png" class="jm-hero-bg" alt="" />
       <div class="jm-hero-vignette"></div>
-
       <div class="jm-hero-banner">
         <div class="jm-hero-banner-left">
           <div class="jm-hero-eyebrow">A Level Design Technology — Major Project</div>
@@ -28,7 +26,6 @@
       </div>
     </div>
 
-    <!-- ═══ ABOUT ME ═══ -->
     <div class="jm-about-section" id="about">
       <div class="jm-about-inner">
         <div class="jm-about-photo-col">
@@ -73,13 +70,12 @@
       </div>
     </div>
 
-    <!-- ═══ FLIPBOOKS ═══ -->
     <div class="jm-flipbooks-section">
       <div class="jm-section-eyebrow">Documents</div>
       <h2 class="jm-section-title">Sketchbook &amp; Manufacturing Pack</h2>
       <p class="jm-body jm-flip-intro">
         Browse the full project sketchbook and manufacturing pack below.
-        Click the page edges or use the arrow controls to turn pages.
+        Use the arrow controls to turn pages.
       </p>
       <div class="jm-flipbook-list">
         <FlipbookViewer
@@ -104,7 +100,6 @@
 
 <script setup>
 import FlipbookViewer from 'components/FlipbookViewer.vue'
-
 function scrollToAbout () {
   document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
 }
@@ -112,28 +107,18 @@ function scrollToAbout () {
 
 <style scoped>
 .jm-page { background: #f2f2f2; color: #333233; }
-
 .jm-hero {
-  position: relative;
-  width: 100%;
-  height: 92vh;
-  min-height: 560px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  position: relative; width: 100%; height: 92vh; min-height: 560px;
+  overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
   background: #d0cecc;
 }
 .jm-hero-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
+  position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: contain;
-  object-position: center 5%;
+  object-position: center 2%;
 }
 .jm-hero-vignette {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0.4) 100%);
 }
 .jm-hero-banner {
@@ -142,10 +127,7 @@ function scrollToAbout () {
   justify-content: space-between; gap: 32px;
 }
 .jm-hero-banner-left { flex: 1; min-width: 0; }
-.jm-hero-banner-right {
-  flex-shrink: 0; display: flex; align-items: center;
-  padding-left: 32px; border-left: 1px solid rgba(255,255,255,0.25);
-}
+.jm-hero-banner-right { flex-shrink: 0; display: flex; align-items: center; padding-left: 32px; border-left: 1px solid rgba(255,255,255,0.25); }
 .jm-hero-logomark { height: 80px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
 .jm-hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 6px; }
 .jm-hero-title { font-size: 36px; font-weight: 800; color: #ffffff; margin: 0 0 10px; letter-spacing: -0.02em; line-height: 1.05; }
@@ -156,7 +138,6 @@ function scrollToAbout () {
 .jm-hero-btn-outline { color: #ffffff !important; border-color: rgba(255,255,255,0.65) !important; font-weight: 600 !important; border-radius: 4px !important; padding: 8px 18px !important; }
 .jm-hero-btn-outline:hover { border-color: #fff !important; background: rgba(255,255,255,0.1) !important; }
 .jm-hero-credit { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
-
 .jm-about-section { background: #ffffff; padding: 0 64px; border-bottom: 1px solid #d8d8d8; min-height: 600px; display: flex; align-items: stretch; }
 .jm-about-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: flex; gap: 72px; align-items: center; padding: 72px 0; }
 .jm-about-photo-col { flex-shrink: 0; width: 300px; display: flex; align-items: center; justify-content: center; align-self: center; }
@@ -170,11 +151,9 @@ function scrollToAbout () {
 .jm-body { font-size: 15px; line-height: 1.8; color: #555455; margin-bottom: 4px; }
 .jm-about-cta { margin-top: 32px; }
 .jm-btn-outline { color: #32a9b1 !important; border-color: #32a9b1 !important; font-weight: 600 !important; border-radius: 4px !important; }
-
 .jm-flipbooks-section { background: #f2f2f2; padding: 64px 64px 80px; }
 .jm-flip-intro { max-width: 600px; margin-bottom: 36px; }
 .jm-flipbook-list { display: flex; flex-direction: column; gap: 40px; max-width: 1100px; }
-
 @media (max-width: 860px) {
   .jm-about-section { padding: 0 24px; }
   .jm-about-inner { flex-direction: column; gap: 40px; padding: 48px 0; align-items: flex-start; }
