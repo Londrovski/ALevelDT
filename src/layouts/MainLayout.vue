@@ -16,6 +16,7 @@
           <q-btn flat no-caps to="/power-system-3d-view" label="Power" class="jm-nav-btn" />
           <q-btn flat no-caps to="/passive-system-3d-view" label="Passive" class="jm-nav-btn" />
           <q-btn flat no-caps to="/attachments-3d-view" label="Attachments" class="jm-nav-btn" />
+          <q-btn flat no-caps to="/flipbooks" label="Flipbooks" class="jm-nav-btn" />
           <q-btn flat no-caps to="/videos" label="Videos" class="jm-nav-btn" />
         </div>
       </q-toolbar>
@@ -52,6 +53,11 @@
           <q-item-section avatar><q-icon name="extension" /></q-item-section>
           <q-item-section>Attachments</q-item-section>
         </q-item>
+        <q-item-label header class="jm-drawer-header">Documents</q-item-label>
+        <q-item clickable v-ripple to="/flipbooks" class="jm-drawer-item">
+          <q-item-section avatar><q-icon name="menu_book" /></q-item-section>
+          <q-item-section>Flipbooks</q-item-section>
+        </q-item>
         <q-item-label header class="jm-drawer-header">Media</q-item-label>
         <q-item clickable v-ripple to="/videos" class="jm-drawer-item">
           <q-item-section avatar><q-icon name="play_circle" /></q-item-section>
@@ -75,20 +81,23 @@ function toggleLeftDrawer () { leftDrawerOpen.value = !leftDrawerOpen.value }
 <style scoped>
 .jm-header {
   background: #ffffff !important;
-  border-bottom: 1px solid #d4d0c8 !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+  border-bottom: 1px solid #d8d8d8 !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07) !important;
 }
-.jm-nav-btn { color: #1e1e1e !important; font-size: 13px !important; }
-.jm-nav-btn:hover { color: #000 !important; background: rgba(0,0,0,0.05) !important; }
-.jm-icon-btn { color: #1e1e1e !important; }
-.jm-brand {
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none; color: #1e1e1e !important;
+.jm-nav-btn {
+  color: #333233 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
 }
+.jm-nav-btn:hover { background: rgba(50,169,177,0.08) !important; color: #32a9b1 !important; }
+.jm-nav-btn.router-link-active { color: #32a9b1 !important; }
+.jm-icon-btn { color: #333233 !important; }
+.jm-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #333233 !important; }
 .jm-logo { height: 36px; width: auto; }
-.jm-brand-name { font-weight: 600; font-size: 16px; letter-spacing: 0.02em; }
-.jm-drawer { background: #ffffff !important; border-right: 1px solid #d4d0c8 !important; }
-.jm-drawer-logo { border-bottom: 1px solid #d4d0c8; }
-.jm-drawer-item { color: #1e1e1e !important; }
-.jm-drawer-header { color: #888882 !important; font-size: 11px !important; font-weight: 600 !important; letter-spacing: 0.08em !important; }
+.jm-brand-name { font-weight: 700; font-size: 16px; letter-spacing: 0.01em; color: #333233; }
+.jm-drawer { background: #ffffff !important; border-right: 1px solid #d8d8d8 !important; }
+.jm-drawer-logo { border-bottom: 1px solid #d8d8d8; }
+.jm-drawer-item { color: #333233 !important; }
+.jm-drawer-item.router-link-active { color: #32a9b1 !important; border-left: 3px solid #32a9b1; }
+.jm-drawer-header { color: #7c7c7c !important; font-size: 10px !important; font-weight: 700 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; }
 </style>
