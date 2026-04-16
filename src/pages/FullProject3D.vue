@@ -5,7 +5,8 @@
       <h1 class="jm-page-title">The Full Monty</h1>
     </div>
     <div class="jm-viewers-wrap">
-      <STLViewer label="The Full Monty" url="/models/The-Full-Monty-with-Top-2.stl" />
+      <STLViewer label="The Full Monty — With Top" url="/models/The-Full-Monty-with-Top-2.stl" />
+      <STLViewer label="The Full Monty — Without Top" url="/models/The-Full-Monty-1.stl" />
     </div>
   </q-page>
 </template>
@@ -31,6 +32,10 @@ import STLViewer from 'components/STLViewer.vue'
 }
 .jm-viewers-wrap {
   padding: 32px 48px 64px;
-  display: flex; flex-direction: column; gap: 32px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+@media (max-width: 600px) {
+  .jm-viewers-wrap { padding: 20px 16px 40px; }
+  .jm-page-header { padding: 24px 20px 20px; }
 }
 </style>
