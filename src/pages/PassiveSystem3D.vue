@@ -1,21 +1,29 @@
 <template>
-  <STLViewer
-    title="Passive System"
-    :models="models"
-  />
+  <q-page class="jm-3d-page">
+    <div class="jm-page-header">
+      <h1 class="jm-page-title">Passive System 3D View</h1>
+    </div>
+    <STLViewer label="Passive Slide" url="/models/Passive-Slide-1.stl" />
+    <STLViewer label="Passive Track" url="/models/Passive-Track-1.stl" />
+    <STLViewer label="Passive Insert" url="/models/Passive-Insert-1.stl" />
+  </q-page>
 </template>
 
 <script setup>
 import STLViewer from 'components/STLViewer.vue'
-
-const models = [
-          { url: '/models/Passive-Slide-1.stl', color: 0x888888 },
-          { url: '/models/Passive-Track-1.stl', color: 0x999999 },
-          { url: '/models/Leg-1.stl', color: 0x777777 },
-          { url: '/models/Top-Pivot.stl', color: 0xaaaaaa },
-          { url: '/models/Pivot-Hanger-1.stl', color: 0x666666 },
-          { url: '/models/Hanger-1-1.stl', color: 0x888888 },
-          { url: '/models/Hanger-2-1.stl', color: 0x999999 },
-          { url: '/models/Hanger-3-1.stl', color: 0x777777 }
-]
 </script>
+
+<style scoped>
+.jm-3d-page { background: #f4f2ef; min-height: 100vh; }
+.jm-page-header {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid #d4d0c8;
+}
+.jm-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e1e1e;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+</style>
