@@ -5,7 +5,7 @@
         <q-btn flat dense round icon="menu" @click="toggleLeftDrawer" class="lt-md jm-icon-btn" />
         <q-toolbar-title>
           <router-link to="/" class="jm-brand">
-            <img src="/images/site-logo-white.png" class="jm-logo" alt="JM" />
+            <img src="/images/site-logo.png" class="jm-logo" alt="JM" />
             <span class="jm-brand-name gt-sm">James Morris</span>
           </router-link>
         </q-toolbar-title>
