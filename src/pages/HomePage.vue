@@ -117,13 +117,15 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  /* Match the render's studio grey exactly */
+  background: #d0cecc;
 }
 .jm-hero-bg {
   position: absolute;
   inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center center;
+  object-fit: contain;
+  object-position: center 40%;
 }
 .jm-hero-vignette {
   position: absolute;
