@@ -11,12 +11,14 @@
         desc="Full design process — research, ideation, development and final design."
         driveUrl="https://drive.google.com/file/d/1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39/view"
         driveId="1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39"
+        r2Url="https://pub-087c249dd2224c6ebb29466c44a0638e.r2.dev/The-Real-Definite-Final-Digital-Sketchbook.pdf"
       />
       <FlipbookViewer
         title="Manufacturing Pack"
         desc="Component orthographics, renders, and full manufacturing specification."
         driveUrl="https://drive.google.com/file/d/1yUyRqo6PfEtlER3tD8t0cVe7HTv1OxFj/view"
         driveId="1yUyRqo6PfEtlER3tD8t0cVe7HTv1OxFj"
+        r2Url="https://pub-087c249dd2224c6ebb29466c44a0638e.r2.dev/The-Real-Final-Manufacturing-Pack.pdf"
       />
     </div>
   </q-page>
