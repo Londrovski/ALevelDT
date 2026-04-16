@@ -124,7 +124,7 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
   width: 100%; height: 100%;
   object-fit: cover;
   /* Shifted up and to the right — shows the gorgeous top of the desk */
-  object-position: 70% 15%;
+  object-position: 82% 8%;
 }
 .jm-hero-vignette {
   position: absolute;
