@@ -1,0 +1,25 @@
+{
+  "name": "aleveldtportfolio",
+  "version": "1.0.0",
+  "description": "James Morris A Level DT Portfolio",
+  "productName": "ALevelDT",
+  "scripts": {
+    "dev": "quasar dev",
+    "build": "quasar build"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.16.0",
+    "quasar": "^2.14.0",
+    "vue": "^3.4.0",
+    "vue-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^1.8.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-vue": "^9.0.0"
+  },
+  "engines": {
+    "node": "^20 || ^18",
+    "npm": ">= 6.13.4"
+  }
+}
