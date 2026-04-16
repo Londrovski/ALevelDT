@@ -22,7 +22,7 @@
     <!-- Slideshow -->
     <div class="jm-slideshow-wrap">
       <q-carousel
-        v-model="slide" animated arrows navigation infinite autoplay :autoplay-speed="4500"
+        v-model="slide" animated arrows navigation infinite autoplay :autoplay-speed="7000"
         transition-prev="slide-right" transition-next="slide-left"
         class="jm-carousel"
       >
@@ -163,7 +163,7 @@ const books = [
 .jm-btn-outline { color: #32a9b1 !important; border-color: #32a9b1 !important; font-weight: 600 !important; padding: 10px 20px !important; border-radius: 4px !important; }
 
 .jm-slideshow-wrap { border-bottom: 1px solid #d8d8d8; }
-.jm-carousel { height: 65vh; min-height: 360px; background: #1a1a1a; }
+.jm-carousel { height: 52vh; min-height: 360px; background: #1a1a1a; }
 .jm-slide { background-size: cover; background-position: center; }
 .jm-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 20px; background: rgba(0,0,0,0.5); color: #fff; font-size: 15px; font-weight: 500; }
 
