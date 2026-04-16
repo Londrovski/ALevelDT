@@ -6,8 +6,8 @@
     </div>
     <div class="jm-viewers-wrap">
       <STLViewer label="Passive Slide" url="/models/Passive-Slide-1.stl" />
-    <STLViewer label="Passive Track" url="/models/Passive-Track-1.stl" />
-    <STLViewer label="Passive Insert" url="/models/Passive-Insert-1.stl" />
+      <STLViewer label="Passive Track" url="/models/Passive-Track-1.stl" />
+      <STLViewer label="Passive Insert" url="/models/Passive-Insert-1.stl" />
     </div>
   </q-page>
 </template>
@@ -33,6 +33,10 @@ import STLViewer from 'components/STLViewer.vue'
 }
 .jm-viewers-wrap {
   padding: 32px 48px 64px;
-  display: flex; flex-direction: column; gap: 32px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+@media (max-width: 600px) {
+  .jm-viewers-wrap { padding: 20px 16px 40px; }
+  .jm-page-header { padding: 24px 20px 20px; }
 }
 </style>
