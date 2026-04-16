@@ -1,49 +1,45 @@
 <template>
   <q-page class="jm-page">
 
-    <!-- Project intro -->
-    <div class="jm-intro">
-      <div class="jm-intro-inner">
-        <div class="jm-intro-text-col">
-          <div class="jm-intro-label">A Level Design Technology — Major Project</div>
-          <h1 class="jm-intro-title">The Standing Desk</h1>
-          <p class="jm-intro-text">
+    <!-- ═══ HERO — full bleed render, teal banner, logo championed ═══ -->
+    <div class="jm-hero">
+      <img src="/images/full-monty-render.png" class="jm-hero-bg" alt="" />
+
+      <!-- Dark vignette so text is always readable -->
+      <div class="jm-hero-vignette"></div>
+
+      <!-- Top-left logo mark — large and proud -->
+      <div class="jm-hero-logo">
+        <img src="/images/site-logo.png" class="jm-hero-logomark" alt="JM" />
+      </div>
+
+      <!-- Teal banner at the bottom — just like the PDF cover -->
+      <div class="jm-hero-banner">
+        <div class="jm-hero-banner-inner">
+          <div class="jm-hero-eyebrow">A Level Design Technology — Major Project</div>
+          <h1 class="jm-hero-title">The Standing Desk</h1>
+          <p class="jm-hero-sub">
             A fully designed, prototyped and 3D-printed standing desk conversion system —
-            built from scratch as part of my A Level DT major project. This site documents the
-            design process, component breakdowns, and build progression from first prototype
-            through to the final assembly.
+            designed and built as part of my A Level DT major project at Bishop's Stortford College.
           </p>
-          <div class="jm-intro-cta">
-            <q-btn to="/full-project-3d-view" class="jm-btn-accent" label="Explore 3D Models" icon="view_in_ar" no-caps />
-            <q-btn to="/flipbooks" class="jm-btn-outline" label="View Sketchbook" icon="menu_book" no-caps outline />
+          <div class="jm-hero-btns">
+            <q-btn to="/full-project-3d-view" class="jm-hero-btn-solid" no-caps label="3D Models" icon="view_in_ar" />
+            <q-btn to="/flipbooks" class="jm-hero-btn-outline" no-caps label="Sketchbook" icon="menu_book" outline />
+            <q-btn to="/photos" class="jm-hero-btn-outline" no-caps label="Pictures" icon="photo_library" outline />
           </div>
         </div>
-        <div class="jm-intro-image-col">
-          <img src="/images/full-monty-render.png" alt="The Full Monty standing desk render" class="jm-intro-render" />
-        </div>
+        <div class="jm-hero-credit">JAMES MORRIS COLLETT</div>
       </div>
     </div>
 
-    <!-- Slideshow -->
-    <div class="jm-slideshow-wrap">
-      <q-carousel
-        v-model="slide" animated arrows navigation infinite :autoplay="7000"
-        transition-prev="slide-right" transition-next="slide-left"
-        class="jm-carousel"
-      >
-        <q-carousel-slide
-          v-for="(photo, i) in photos" :key="i" :name="i"
-          :img-src="photo.src" class="jm-slide"
-        >
-          <div class="jm-caption">{{ photo.label }}</div>
-        </q-carousel-slide>
-      </q-carousel>
-    </div>
-
-    <!-- About Me + award photo -->
+    <!-- ═══ ABOUT ME — large photo, text alongside ═══ -->
     <div class="jm-about-section">
       <div class="jm-about-inner">
-        <div class="jm-about-text">
+        <div class="jm-about-photo-col">
+          <img src="/images/james-alevel-award.jpg" alt="James Morris" class="jm-about-photo" />
+          <div class="jm-about-photo-caption">Receiving the DT A Level Prize</div>
+        </div>
+        <div class="jm-about-text-col">
           <div class="jm-section-eyebrow">About Me</div>
           <h2 class="jm-section-title">James Morris</h2>
           <p class="jm-body">
@@ -59,41 +55,36 @@
             I looked into a way of converting a standard school desk into a standing desk, for
             benefits to both health and focus. I focused on the mechanics of a scissor leg system;
             if one pivot is stationary and the other moving, I can generate lift. The project went
-            through many iterations but all with that exact principle, finding a way to get the
-            second pivot to move. Thanks to the complexity of the mechanism and my digital approach,
-            I now have a much greater understanding of Adobe InDesign and Fusion 360. Overall I'm
-            very happy with the project as a whole; I had a blast making it and am very proud of
-            what I have produced.
+            through many iterations but all with that exact principle. Thanks to the complexity of
+            the mechanism and my digital approach, I now have a much greater understanding of
+            Adobe InDesign and Fusion 360. Overall I'm very happy with the project as a whole;
+            I had a blast making it and am very proud of what I have produced.
           </p>
 
           <div class="jm-subsection-title">Doing It Differently</div>
           <p class="jm-body">
-            For my project however I wanted to do it a bit differently. I enjoy trying new
-            technology and so bought a reMarkable 2 tablet at the tail end of lower sixth. I
-            decided to do my entire project digitally, using Adobe InDesign to present it. This
-            digital sketchbook gave me the flexibility to compile all my work in a logical order,
-            as opposed to the classic chronological order of a sketchbook where you may have
-            multiple projects going in tandem. This has definitely posed a challenge to my workflow
-            but one I embraced and have enjoyed.
+            For my project I wanted to do it a bit differently. I enjoy trying new technology
+            and so bought a reMarkable 2 tablet at the tail end of lower sixth. I decided to do
+            my entire project digitally, using Adobe InDesign to present it. This digital
+            sketchbook gave me the flexibility to compile all my work in a logical order,
+            as opposed to the classic chronological order of a sketchbook. This has definitely
+            posed a challenge to my workflow but one I embraced and have enjoyed.
           </p>
 
           <div class="jm-about-cta">
             <q-btn to="/videos" class="jm-btn-outline" label="Watch Build Videos" icon="play_circle" no-caps outline />
           </div>
         </div>
-        <div class="jm-about-image">
-          <img src="/images/james-alevel-award.jpg" alt="James Morris receiving his A Level award" class="jm-award-img" />
-          <div class="jm-award-caption">Receiving the DT A Level Prize</div>
-        </div>
       </div>
     </div>
 
-    <!-- Flipbooks inline — below about section -->
+    <!-- ═══ FLIPBOOKS ═══ -->
     <div class="jm-flipbooks-section">
       <div class="jm-section-eyebrow">Documents</div>
       <h2 class="jm-section-title">Sketchbook &amp; Manufacturing Pack</h2>
       <p class="jm-body jm-flip-intro">
-        Browse the full project sketchbook and manufacturing pack below. Click the page edges or use the arrow controls to turn pages.
+        Browse the full project sketchbook and manufacturing pack below.
+        Click the page edges or use the arrow controls to turn pages.
       </p>
       <div class="jm-flipbook-list">
         <FlipbookViewer
@@ -115,70 +106,159 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import FlipbookViewer from 'components/FlipbookViewer.vue'
-const slide = ref(0)
-
-const photos = [
-  { src: '/images/PXL_20220324_135343336-scaled.jpg',   label: 'Final Prototype' },
-  { src: '/images/PXL_20211111_113805146-scaled.jpg',   label: 'Mk 5.2 – First Track & Slide Design' },
-  { src: '/images/PXL_20211117_125846802-scaled.jpg',   label: 'Mk 5.4 – Circular Track & Slide' },
-  { src: '/images/PXL_20211122_112510934-scaled.jpg',   label: 'Mk 5.7 – Condensed Track & Slide' },
-  { src: '/images/PXL_20211217_092734307-scaled.jpg',   label: 'Mk 5.13.2 – Double Leg Demo' },
-  { src: '/images/PXL_20211213_155001297-scaled.jpg',   label: 'Bevel Gears V1' },
-  { src: '/images/PXL_20220113_113743033-scaled.jpg',   label: 'Bevel Gears V2' },
-  { src: '/images/PXL_20220126_122653604-scaled.jpg',   label: 'Three-Way Bevel Gear Hub (3WBGH)' },
-  { src: '/images/PXL_20220201_092633347-scaled.jpg',   label: '3WBGH – 2WBGH Connection' },
-  { src: '/images/PXL_20220207_112308184-scaled.jpg',   label: 'Final Prototype Assembly' },
-  { src: '/images/PXL_20220208_093524176-scaled.jpg',   label: 'Height Difference When Lowered' },
-  { src: '/images/PXL_20220209_155039849-scaled.jpg',   label: 'Final Prototype' },
-]
-
 </script>
 
 <style scoped>
 .jm-page { background: #f2f2f2; color: #333233; }
 
-.jm-intro { background: #ffffff; border-bottom: 1px solid #d8d8d8; padding: 48px 48px 52px; }
-.jm-intro-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 48px; }
-.jm-intro-text-col { flex: 1; min-width: 0; }
-.jm-intro-image-col { flex-shrink: 0; width: 380px; display: flex; align-items: center; justify-content: center; }
-.jm-intro-render { width: 100%; height: auto; display: block; }
-.jm-intro-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #32a9b1; margin-bottom: 12px; }
-.jm-intro-title { font-size: 40px; font-weight: 800; color: #333233; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.1; }
-.jm-intro-text { font-size: 17px; line-height: 1.7; color: #555455; margin-bottom: 28px; max-width: 640px; }
-.jm-intro-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-.jm-btn-accent { background: #32a9b1 !important; color: #fff !important; font-weight: 600 !important; padding: 10px 20px !important; border-radius: 4px !important; }
-.jm-btn-accent:hover { background: #248d94 !important; }
-.jm-btn-outline { color: #32a9b1 !important; border-color: #32a9b1 !important; font-weight: 600 !important; padding: 10px 20px !important; border-radius: 4px !important; }
+/* ── HERO ── */
+.jm-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.jm-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+.jm-hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15) 0%,
+    rgba(0,0,0,0.0)  35%,
+    rgba(0,0,0,0.35) 75%,
+    rgba(0,0,0,0.55) 100%
+  );
+}
+/* Logo mark — top-left, large, white */
+.jm-hero-logo {
+  position: absolute;
+  top: 28px; left: 32px;
+  z-index: 2;
+}
+.jm-hero-logomark {
+  height: 72px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
 
-.jm-slideshow-wrap { border-bottom: 1px solid #d8d8d8; }
-.jm-carousel { height: 52vh; min-height: 360px; background: #1a1a1a; }
-.jm-slide { background-size: cover; background-position: center; }
-.jm-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 20px; background: rgba(0,0,0,0.5); color: #fff; font-size: 15px; font-weight: 500; }
+/* Teal banner — exact PDF cover style */
+.jm-hero-banner {
+  position: relative;
+  z-index: 2;
+  background: #32a9b1;
+  padding: 28px 48px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.jm-hero-banner-inner { flex: 1; min-width: 0; }
+.jm-hero-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.75);
+  margin-bottom: 6px;
+}
+.jm-hero-title {
+  font-size: 36px; font-weight: 800; color: #ffffff;
+  margin: 0 0 10px; letter-spacing: -0.02em; line-height: 1.05;
+}
+.jm-hero-sub {
+  font-size: 15px; color: rgba(255,255,255,0.85);
+  margin: 0 0 20px; max-width: 600px; line-height: 1.6;
+}
+.jm-hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.jm-hero-btn-solid {
+  background: #ffffff !important; color: #32a9b1 !important;
+  font-weight: 700 !important; border-radius: 4px !important;
+  padding: 9px 20px !important;
+}
+.jm-hero-btn-solid:hover { background: #f0f0f0 !important; }
+.jm-hero-btn-outline {
+  color: #ffffff !important; border-color: rgba(255,255,255,0.7) !important;
+  font-weight: 600 !important; border-radius: 4px !important;
+  padding: 9px 20px !important;
+}
+.jm-hero-btn-outline:hover { border-color: #ffffff !important; background: rgba(255,255,255,0.1) !important; }
+.jm-hero-credit {
+  flex-shrink: 0;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.7);
+  text-align: right; white-space: nowrap;
+  align-self: flex-end;
+}
 
-.jm-about-section { background: #ffffff; border-top: 1px solid #d8d8d8; padding: 56px 48px 64px; }
-.jm-about-inner { max-width: 980px; margin: 0 auto; display: flex; gap: 56px; align-items: flex-start; }
-.jm-about-text { flex: 1; min-width: 0; }
-.jm-section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #32a9b1; margin-bottom: 8px; }
-.jm-section-title { font-size: 28px; font-weight: 700; color: #333233; margin: 0 0 20px; letter-spacing: -0.01em; }
-.jm-subsection-title { font-size: 17px; font-weight: 700; color: #333233; margin: 28px 0 10px; }
-.jm-body { font-size: 15px; line-height: 1.75; color: #555455; margin-bottom: 4px; }
-.jm-about-cta { margin-top: 28px; }
-.jm-about-image { flex-shrink: 0; width: 260px; text-align: center; align-self: flex-start; padding-top: 120px; }
-.jm-award-img { width: 100%; border-radius: 6px; border: 1px solid #d8d8d8; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
-.jm-award-caption { font-size: 13px; color: #7c7c7c; margin-top: 10px; font-style: italic; }
+/* ── ABOUT ── */
+.jm-about-section {
+  background: #ffffff;
+  padding: 72px 64px;
+  border-bottom: 1px solid #d8d8d8;
+}
+.jm-about-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; gap: 72px; align-items: flex-start;
+}
+.jm-about-photo-col {
+  flex-shrink: 0; width: 320px; text-align: center;
+  position: sticky; top: 96px;
+}
+.jm-about-photo {
+  width: 100%; border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  border: 1px solid #d8d8d8;
+}
+.jm-about-photo-caption {
+  font-size: 13px; color: #7c7c7c; margin-top: 12px; font-style: italic;
+}
+.jm-about-text-col { flex: 1; min-width: 0; }
+.jm-section-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #32a9b1; margin-bottom: 8px;
+}
+.jm-section-title {
+  font-size: 32px; font-weight: 800; color: #333233;
+  margin: 0 0 24px; letter-spacing: -0.02em;
+}
+.jm-subsection-title {
+  font-size: 17px; font-weight: 700; color: #333233; margin: 28px 0 10px;
+}
+.jm-body { font-size: 15px; line-height: 1.8; color: #555455; margin-bottom: 4px; }
+.jm-about-cta { margin-top: 32px; }
+.jm-btn-outline {
+  color: #32a9b1 !important; border-color: #32a9b1 !important;
+  font-weight: 600 !important; border-radius: 4px !important;
+}
 
-.jm-flipbooks-section { background: #f2f2f2; padding: 56px 48px 72px; }
-.jm-flip-intro { max-width: 620px; margin-bottom: 32px; }
-.jm-flipbook-list { display: flex; flex-direction: column; gap: 40px; max-width: 980px; }
+/* ── FLIPBOOKS ── */
+.jm-flipbooks-section {
+  background: #f2f2f2; padding: 64px 64px 80px;
+}
+.jm-flip-intro { max-width: 600px; margin-bottom: 36px; }
+.jm-flipbook-list {
+  display: flex; flex-direction: column; gap: 40px; max-width: 1100px;
+}
 
-
-
-@media (max-width: 720px) {
-  .jm-about-inner { flex-direction: column-reverse; gap: 32px; }
-  .jm-about-image { width: 100%; max-width: 300px; margin: 0 auto; }
-  .jm-intro-title { font-size: 28px; }
-  .jm-about-section, .jm-flipbooks-section { padding: 36px 20px 48px; }
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .jm-about-inner { flex-direction: column; gap: 40px; }
+  .jm-about-photo-col { width: 100%; max-width: 340px; position: static; }
+  .jm-about-section { padding: 40px 24px; }
+  .jm-flipbooks-section { padding: 40px 20px 56px; }
+  .jm-hero-banner { padding: 24px 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .jm-hero-title { font-size: 26px; }
+  .jm-hero-credit { align-self: flex-start; }
+  .jm-hero-logomark { height: 52px; }
 }
 </style>
