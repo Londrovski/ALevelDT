@@ -93,26 +93,21 @@
       <div class="jm-section-eyebrow">Documents</div>
       <h2 class="jm-section-title">Sketchbook &amp; Manufacturing Pack</h2>
       <p class="jm-body jm-flip-intro">
-        Digital versions of the full project sketchbook and manufacturing pack — browse them below or open in Google Drive.
+        Browse the full project sketchbook and manufacturing pack below. Click the page edges or use the arrow controls to turn pages.
       </p>
       <div class="jm-flipbook-list">
-        <div v-for="book in books" :key="book.id" class="jm-flipbook-block">
-          <div class="jm-flipbook-header">
-            <div>
-              <div class="jm-flipbook-title">{{ book.title }}</div>
-              <div class="jm-flipbook-desc">{{ book.desc }}</div>
-            </div>
-            <a :href="book.driveUrl" target="_blank" class="jm-open-link">
-              Open in Drive <q-icon name="open_in_new" size="13px" />
-            </a>
-          </div>
-          <div class="jm-embed-wrap">
-            <iframe
-              :src="`https://drive.google.com/file/d/${book.id}/preview`"
-              class="jm-embed" allow="autoplay" frameborder="0"
-            ></iframe>
-          </div>
-        </div>
+        <FlipbookViewer
+          title="Design Sketchbook"
+          desc="Full design process — research, ideation, development and final design."
+          pdfUrl="https://drive.google.com/uc?export=download&id=1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39"
+          driveUrl="https://drive.google.com/file/d/1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39/view"
+        />
+        <FlipbookViewer
+          title="Manufacturing Pack"
+          desc="Component orthographics, renders, and full manufacturing specification."
+          pdfUrl="/docs/manufacturing-pack.pdf"
+          driveUrl="https://drive.google.com/file/d/1yUyRqo6PfEtlER3tD8t0cVe7HTv1OxFj/view"
+        />
       </div>
     </div>
 
@@ -121,6 +116,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import FlipbookViewer from 'components/FlipbookViewer.vue'
 const slide = ref(0)
 
 const photos = [
@@ -138,20 +134,6 @@ const photos = [
   { src: '/images/PXL_20220209_155039849-scaled.jpg',   label: 'Final Prototype' },
 ]
 
-const books = [
-  {
-    id: '1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39',
-    title: 'Design Sketchbook',
-    desc: 'Full design process — research, ideation, development and final design.',
-    driveUrl: 'https://drive.google.com/file/d/1yYwP8BtXqhwKVnwMZ48AzlQJqITeAA39/view'
-  },
-  {
-    id: '1yUyRqo6PfEtlER3tD8t0cVe7HTv1OxFj',
-    title: 'Manufacturing Pack',
-    desc: 'Component orthographics, renders, and full manufacturing specification.',
-    driveUrl: 'https://drive.google.com/file/d/1yUyRqo6PfEtlER3tD8t0cVe7HTv1OxFj/view'
-  }
-]
 </script>
 
 <style scoped>
@@ -190,14 +172,8 @@ const books = [
 .jm-flipbooks-section { background: #f2f2f2; padding: 56px 48px 72px; }
 .jm-flip-intro { max-width: 620px; margin-bottom: 32px; }
 .jm-flipbook-list { display: flex; flex-direction: column; gap: 40px; max-width: 980px; }
-.jm-flipbook-block { background: #ffffff; border: 1px solid #d8d8d8; border-radius: 6px; overflow: hidden; }
-.jm-flipbook-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 24px 16px; border-bottom: 1px solid #ebebeb; }
-.jm-flipbook-title { font-size: 18px; font-weight: 700; color: #333233; margin-bottom: 4px; }
-.jm-flipbook-desc { font-size: 13px; color: #7c7c7c; }
-.jm-open-link { font-size: 13px; font-weight: 600; color: #32a9b1; text-decoration: none; white-space: nowrap; margin-left: 16px; display: flex; align-items: center; gap: 4px; padding-top: 2px; }
-.jm-open-link:hover { color: #248d94; }
-.jm-embed-wrap { width: 100%; background: #1a1a1a; }
-.jm-embed { display: block; width: 100%; height: 78vh; min-height: 480px; border: none; }
+
+
 
 @media (max-width: 720px) {
   .jm-about-inner { flex-direction: column-reverse; gap: 32px; }
