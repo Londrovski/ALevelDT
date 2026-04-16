@@ -19,6 +19,7 @@
             <q-btn to="/full-project-3d-view" class="jm-hero-btn-solid" no-caps label="3D Models" icon="view_in_ar" />
             <q-btn to="/flipbooks" class="jm-hero-btn-outline" no-caps label="Sketchbook" icon="menu_book" outline />
             <q-btn to="/photos" class="jm-hero-btn-outline" no-caps label="Pictures" icon="photo_library" outline />
+            <q-btn class="jm-hero-btn-outline" no-caps label="About Me" icon="person" outline @click="scrollToAbout" />
           </div>
           <div class="jm-hero-credit">JAMES MORRIS</div>
         </div>
@@ -29,7 +30,7 @@
     </div>
 
     <!-- ═══ ABOUT ME ═══ -->
-    <div class="jm-about-section">
+    <div class="jm-about-section" id="about">
       <div class="jm-about-inner">
         <div class="jm-about-photo-col">
           <div class="jm-about-photo-frame">
@@ -104,6 +105,10 @@
 
 <script setup>
 import FlipbookViewer from 'components/FlipbookViewer.vue'
+
+function scrollToAbout () {
+  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 
 <style scoped>
@@ -119,7 +124,6 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* Match the render's studio grey exactly */
   background: #d0cecc;
 }
 .jm-hero-bg {
@@ -127,7 +131,8 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
   inset: 0;
   width: 100%; height: 100%;
   object-fit: contain;
-  object-position: center 40%;
+  /* Shifted up to 15% — removes dead space above desk, shows more of base */
+  object-position: center 15%;
 }
 .jm-hero-vignette {
   position: absolute;
@@ -194,7 +199,7 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
   text-transform: uppercase; color: rgba(255,255,255,0.55);
 }
 
-/* ── ABOUT — photo centred vertically in section, no sticky ── */
+/* ── ABOUT ── */
 .jm-about-section {
   background: #ffffff;
   padding: 0 64px;
