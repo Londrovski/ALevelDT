@@ -4,61 +4,64 @@
     <div class="jm-page-header">
       <div class="jm-page-eyebrow">Build Progression</div>
       <h1 class="jm-page-title">Pictures</h1>
-      <p class="jm-page-sub">Click any photo to view full size. Filter by build stage below.</p>
-
-      <!-- Filter chips -->
       <div class="jm-filter-row">
         <button
           v-for="tag in allTags" :key="tag"
-          class="jm-chip"
-          :class="{ 'jm-chip--active': activeTag === tag }"
-          @click="activeTag = activeTag === tag ? null : tag"
+          class="jm-chip" :class="{ 'jm-chip--active': activeTag === tag }"
+          @click="setTag(tag)"
         >{{ tag }}</button>
       </div>
     </div>
 
-    <!-- Masonry-style gallery -->
-    <div class="jm-gallery" ref="galleryEl">
-      <div
-        v-for="(photo, i) in filtered"
-        :key="photo.src"
-        class="jm-gallery-item"
-        :class="`jm-gallery-item--${(i % 5) + 1}`"
-        @click="openLightbox(photo)"
-      >
-        <img :src="photo.src" :alt="photo.label" class="jm-gallery-img" loading="lazy" />
-        <div class="jm-gallery-overlay">
-          <div class="jm-gallery-label">{{ photo.label }}</div>
-          <div class="jm-gallery-tag">{{ photo.tag }}</div>
+    <!-- Split layout: filmstrip left, large preview right -->
+    <div class="jm-viewer">
+
+      <!-- Left: scrollable filmstrip -->
+      <div class="jm-filmstrip" ref="filmstripEl">
+        <div
+          v-for="(photo, i) in filtered" :key="photo.src"
+          class="jm-thumb"
+          :class="{ 'jm-thumb--active': selected === photo }"
+          @click="selected = photo"
+        >
+          <img :src="photo.src" :alt="photo.label" class="jm-thumb-img" loading="lazy" />
+          <div class="jm-thumb-label">{{ photo.label }}</div>
+          <div class="jm-thumb-tag">{{ photo.tag }}</div>
         </div>
       </div>
-    </div>
 
-    <!-- Lightbox -->
-    <div v-if="lightbox" class="jm-lightbox" @click.self="lightbox = null">
-      <button class="jm-lb-close" @click="lightbox = null">
-        <q-icon name="close" size="28px" />
-      </button>
-      <button class="jm-lb-prev" @click="lightboxPrev">
-        <q-icon name="chevron_left" size="36px" />
-      </button>
-      <div class="jm-lb-inner">
-        <img :src="lightbox.src" :alt="lightbox.label" class="jm-lb-img" />
-        <div class="jm-lb-caption">
-          <span class="jm-lb-label">{{ lightbox.label }}</span>
-          <span class="jm-lb-tag">{{ lightbox.tag }}</span>
+      <!-- Right: large preview -->
+      <div class="jm-preview" v-if="selected">
+        <div class="jm-preview-img-wrap">
+          <img :src="selected.src" :alt="selected.label" class="jm-preview-img" />
+        </div>
+        <div class="jm-preview-info">
+          <div class="jm-preview-label">{{ selected.label }}</div>
+          <span class="jm-preview-tag">{{ selected.tag }}</span>
+          <div class="jm-preview-nav">
+            <button class="jm-nav-btn" @click="prevPhoto" :disabled="filteredIndex === 0">
+              <q-icon name="chevron_left" size="20px" /> Prev
+            </button>
+            <span class="jm-nav-count">{{ filteredIndex + 1 }} / {{ filtered.length }}</span>
+            <button class="jm-nav-btn" @click="nextPhoto" :disabled="filteredIndex === filtered.length - 1">
+              Next <q-icon name="chevron_right" size="20px" />
+            </button>
+          </div>
         </div>
       </div>
-      <button class="jm-lb-next" @click="lightboxNext">
-        <q-icon name="chevron_right" size="36px" />
-      </button>
-    </div>
 
+      <!-- Empty state -->
+      <div class="jm-preview jm-preview--empty" v-else>
+        <q-icon name="photo_library" size="56px" color="grey-4" />
+        <div class="jm-empty-text">Select a photo from the filmstrip</div>
+      </div>
+
+    </div>
   </q-page>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const photos = [
   { src: '/images/PXL_20211111_113805146-scaled.jpg', label: 'Mk 5.2 – First Track & Slide Design', tag: 'Track & Slide' },
@@ -85,149 +88,186 @@ const filtered = computed(() =>
     : photos.filter(p => p.tag === activeTag.value)
 )
 
-// Lightbox
-const lightbox = ref(null)
-function openLightbox (photo) { lightbox.value = photo }
-function lightboxPrev () {
-  const arr = filtered.value
-  const i = arr.indexOf(lightbox.value)
-  lightbox.value = arr[(i - 1 + arr.length) % arr.length]
+const selected = ref(photos[0])
+const filteredIndex = computed(() => filtered.value.indexOf(selected.value))
+
+function setTag (tag) {
+  activeTag.value = activeTag.value === tag ? null : tag
+  // Auto-select first of filtered set
+  selected.value = filtered.value[0] || null
 }
-function lightboxNext () {
-  const arr = filtered.value
-  const i = arr.indexOf(lightbox.value)
-  lightbox.value = arr[(i + 1) % arr.length]
+
+function nextPhoto () {
+  const i = filteredIndex.value
+  if (i < filtered.value.length - 1) selected.value = filtered.value[i + 1]
 }
-// Keyboard navigation
+function prevPhoto () {
+  const i = filteredIndex.value
+  if (i > 0) selected.value = filtered.value[i - 1]
+}
+
+// Keyboard nav
 if (typeof window !== 'undefined') {
   window.addEventListener('keydown', (e) => {
-    if (!lightbox.value) return
-    if (e.key === 'ArrowRight') lightboxNext()
-    if (e.key === 'ArrowLeft')  lightboxPrev()
-    if (e.key === 'Escape')     lightbox.value = null
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') nextPhoto()
+    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  prevPhoto()
   })
 }
 </script>
 
 <style scoped>
-.jm-photos-page { background: #f2f2f2; min-height: 100vh; color: #333233; }
+.jm-photos-page {
+  background: #f2f2f2;
+  min-height: 100vh;
+  color: #333233;
+  display: flex;
+  flex-direction: column;
+}
 
 /* Header */
 .jm-page-header {
   background: #ffffff;
-  padding: 32px 48px 24px;
+  padding: 28px 48px 20px;
   border-bottom: 1px solid #d8d8d8;
+  flex-shrink: 0;
 }
 .jm-page-eyebrow {
   font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: #32a9b1; margin-bottom: 6px;
+  text-transform: uppercase; color: #32a9b1; margin-bottom: 4px;
 }
-.jm-page-title { font-size: 28px; font-weight: 700; color: #333233; margin: 0 0 4px; }
-.jm-page-sub { font-size: 14px; color: #7c7c7c; margin: 0 0 20px; }
+.jm-page-title { font-size: 26px; font-weight: 700; color: #333233; margin: 0 0 16px; }
 
 /* Filter chips */
 .jm-filter-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .jm-chip {
-  padding: 6px 16px;
-  border-radius: 999px;
-  border: 1.5px solid #b2b2b2;
-  background: transparent;
-  color: #555455;
-  font-size: 13px; font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  padding: 5px 14px; border-radius: 999px;
+  border: 1.5px solid #b2b2b2; background: transparent;
+  color: #555455; font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: all 0.15s;
 }
 .jm-chip:hover { border-color: #32a9b1; color: #32a9b1; }
 .jm-chip--active { background: #32a9b1 !important; border-color: #32a9b1 !important; color: #fff !important; }
 
-/* Gallery — CSS grid masonry-feel with varying spans */
-.jm-gallery {
-  padding: 28px 48px 64px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 200px;
-  gap: 12px;
+/* ── MAIN VIEWER — filmstrip + preview ── */
+.jm-viewer {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  height: calc(100vh - 160px);
 }
-.jm-gallery-item {
-  position: relative; overflow: hidden; border-radius: 6px;
-  cursor: pointer; background: #e0deda;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+/* Filmstrip — left column, scrollable */
+.jm-filmstrip {
+  width: 240px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  background: #1e1e1e;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #32a9b1 #1e1e1e;
 }
-.jm-gallery-item:hover { transform: scale(1.02); box-shadow: 0 8px 28px rgba(0,0,0,0.18); z-index: 1; }
+.jm-filmstrip::-webkit-scrollbar { width: 4px; }
+.jm-filmstrip::-webkit-scrollbar-track { background: #1e1e1e; }
+.jm-filmstrip::-webkit-scrollbar-thumb { background: #32a9b1; border-radius: 2px; }
 
-/* Varying sizes for visual rhythm */
-.jm-gallery-item--1 { grid-column: span 2; grid-row: span 2; }
-.jm-gallery-item--2 { grid-column: span 1; grid-row: span 1; }
-.jm-gallery-item--3 { grid-column: span 1; grid-row: span 2; }
-.jm-gallery-item--4 { grid-column: span 2; grid-row: span 1; }
-.jm-gallery-item--5 { grid-column: span 1; grid-row: span 1; }
+.jm-thumb {
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.15s, transform 0.1s;
+  background: #2a2a2a;
+  flex-shrink: 0;
+}
+.jm-thumb:hover { border-color: rgba(50,169,177,0.5); transform: translateX(2px); }
+.jm-thumb--active { border-color: #32a9b1 !important; }
 
-.jm-gallery-img {
-  width: 100%; height: 100%;
+.jm-thumb-img {
+  width: 100%; height: 110px;
   object-fit: cover; display: block;
-  transition: transform 0.3s ease;
 }
-.jm-gallery-item:hover .jm-gallery-img { transform: scale(1.06); }
-
-.jm-gallery-overlay {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 24px 14px 12px;
-  background: linear-gradient(transparent, rgba(0,0,0,0.65));
-  opacity: 0; transition: opacity 0.2s ease;
+.jm-thumb-label {
+  font-size: 11px; font-weight: 600; color: #e8e8e8;
+  padding: 6px 8px 2px; line-height: 1.3;
 }
-.jm-gallery-item:hover .jm-gallery-overlay { opacity: 1; }
-.jm-gallery-label { font-size: 13px; font-weight: 600; color: #fff; }
-.jm-gallery-tag {
-  display: inline-block; margin-top: 4px;
-  padding: 2px 8px; border-radius: 999px;
-  background: #32a9b1; color: #fff;
-  font-size: 11px; font-weight: 600;
+.jm-thumb-tag {
+  display: inline-block; margin: 2px 8px 7px;
+  padding: 1px 7px; border-radius: 999px;
+  background: rgba(50,169,177,0.25); color: #32a9b1;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
 }
 
-/* Lightbox */
-.jm-lightbox {
-  position: fixed; inset: 0; z-index: 9999;
-  background: rgba(0,0,0,0.92);
-  display: flex; align-items: center; justify-content: center;
+/* Preview — right panel */
+.jm-preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #2c2c2c;
+  overflow: hidden;
+}
+.jm-preview--empty {
+  align-items: center;
+  justify-content: center;
   gap: 16px;
 }
-.jm-lb-inner {
-  max-width: 90vw; max-height: 90vh;
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
+.jm-empty-text { color: #7c7c7c; font-size: 15px; }
+
+.jm-preview-img-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 24px;
+  min-height: 0;
 }
-.jm-lb-img {
-  max-width: 88vw; max-height: 82vh;
-  object-fit: contain; border-radius: 4px;
-  box-shadow: 0 16px 64px rgba(0,0,0,0.5);
+.jm-preview-img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  transition: opacity 0.2s;
 }
-.jm-lb-caption {
-  display: flex; align-items: center; gap: 10px;
+
+.jm-preview-info {
+  flex-shrink: 0;
+  background: #1e1e1e;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid #333;
 }
-.jm-lb-label { font-size: 15px; font-weight: 600; color: #fff; }
-.jm-lb-tag {
+.jm-preview-label { font-size: 15px; font-weight: 600; color: #ffffff; flex: 1; }
+.jm-preview-tag {
   padding: 3px 10px; border-radius: 999px;
-  background: #32a9b1; color: #fff;
-  font-size: 12px; font-weight: 600;
+  background: rgba(50,169,177,0.2); color: #32a9b1;
+  font-size: 12px; font-weight: 700;
+  white-space: nowrap;
 }
-.jm-lb-close {
-  position: fixed; top: 20px; right: 24px;
-  background: none; border: none; color: rgba(255,255,255,0.7);
-  cursor: pointer; z-index: 10000; padding: 4px;
+.jm-preview-nav {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
 }
-.jm-lb-close:hover { color: #fff; }
-.jm-lb-prev, .jm-lb-next {
-  background: none; border: none;
-  color: rgba(255,255,255,0.6); cursor: pointer;
-  padding: 12px; flex-shrink: 0;
-  transition: color 0.15s;
+.jm-nav-btn {
+  display: flex; align-items: center; gap: 2px;
+  background: none; border: 1px solid #444; border-radius: 4px;
+  color: #ccc; font-size: 13px; font-weight: 500;
+  padding: 4px 10px; cursor: pointer;
+  transition: all 0.15s;
 }
-.jm-lb-prev:hover, .jm-lb-next:hover { color: #32a9b1; }
+.jm-nav-btn:hover:not(:disabled) { border-color: #32a9b1; color: #32a9b1; }
+.jm-nav-btn:disabled { opacity: 0.3; cursor: default; }
+.jm-nav-count { font-size: 13px; color: #7c7c7c; min-width: 50px; text-align: center; }
 
 @media (max-width: 700px) {
-  .jm-gallery { grid-template-columns: repeat(2, 1fr); padding: 16px 16px 40px; }
-  .jm-gallery-item--1 { grid-column: span 2; }
-  .jm-gallery-item--3 { grid-column: span 1; }
-  .jm-gallery-item--4 { grid-column: span 2; }
-  .jm-page-header { padding: 24px 20px 20px; }
+  .jm-viewer { flex-direction: column; height: auto; }
+  .jm-filmstrip { width: 100%; height: 180px; flex-direction: row; overflow-x: auto; overflow-y: hidden; padding: 8px; gap: 6px; }
+  .jm-thumb { flex-shrink: 0; width: 130px; }
+  .jm-thumb-img { height: 80px; }
+  .jm-preview { min-height: 60vh; }
+  .jm-page-header { padding: 20px 20px 16px; }
 }
 </style>
