@@ -6,10 +6,10 @@
     </div>
     <div class="jm-viewers-wrap">
       <STLViewer label="Top Pivot" url="/models/Top-Pivot.stl" />
-    <STLViewer label="Pivot Hanger" url="/models/Pivot-Hanger-1.stl" />
-    <STLViewer label="Hanger 1" url="/models/Hanger-1-1.stl" />
-    <STLViewer label="Hanger 2" url="/models/Hanger-2-1.stl" />
-    <STLViewer label="Hanger 3" url="/models/Hanger-3-1.stl" />
+      <STLViewer label="Pivot Hanger" url="/models/Pivot-Hanger-1.stl" />
+      <STLViewer label="Hanger 1" url="/models/Hanger-1-1.stl" />
+      <STLViewer label="Hanger 2" url="/models/Hanger-2-1.stl" />
+      <STLViewer label="Hanger 3" url="/models/Hanger-3-1.stl" />
     </div>
   </q-page>
 </template>
@@ -35,6 +35,10 @@ import STLViewer from 'components/STLViewer.vue'
 }
 .jm-viewers-wrap {
   padding: 32px 48px 64px;
-  display: flex; flex-direction: column; gap: 32px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+@media (max-width: 600px) {
+  .jm-viewers-wrap { padding: 20px 16px 40px; }
+  .jm-page-header { padding: 24px 20px 20px; }
 }
 </style>
