@@ -6,7 +6,7 @@
     </div>
     <div class="jm-canvas-wrap">
       <div ref="container" class="jm-canvas-inner"></div>
-      <div v-if="loading" class="jm-loading">Loading…</div>
+      <div v-if="loading" class="jm-loading">Loading model…</div>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ function init () {
   const h = props.height
 
   scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xf2f2f2)
+  scene.background = new THREE.Color(0xfafafa)   // near-white — distinct from page bg
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.7))
   const d1 = new THREE.DirectionalLight(0xffffff, 0.6)
@@ -64,7 +64,6 @@ function init () {
     }))
     scene.add(mesh)
 
-    // Fit camera — bounding sphere approach, always shows full model
     geo.computeBoundingSphere()
     const r = geo.boundingSphere.radius
     const fovRad = camera.fov * Math.PI / 180
@@ -107,36 +106,32 @@ onBeforeUnmount(() => {
 <style scoped>
 .jm-viewer-block {
   background: #ffffff;
-  border-bottom: 1px solid #d8d8d8;
-  margin: 0 24px 0;
+  border: 1px solid #b2b2b2;
+  border-radius: 6px;
+  overflow: hidden;
 }
-.jm-viewer-block + .jm-viewer-block { margin-top: 0; }
 .jm-viewer-header {
-  padding: 22px 0 12px;
-  border-bottom: 1px solid #ebebeb;
-  margin-bottom: 0;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid #e8e8e8;
+  background: #ffffff;
 }
 .jm-viewer-label {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: #333233;
   letter-spacing: -0.01em;
 }
 .jm-viewer-hint {
-  font-size: 13px;
+  font-size: 12px;
   color: #b2b2b2;
-  margin-top: 4px;
+  margin-top: 3px;
 }
-.jm-canvas-wrap {
-  position: relative;
-  margin: 0 -0px;
-}
+.jm-canvas-wrap { position: relative; }
 .jm-canvas-inner { width: 100%; line-height: 0; }
 .jm-canvas-inner canvas { display: block; width: 100% !important; }
 .jm-loading {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  color: #b2b2b2; font-size: 14px;
-  pointer-events: none;
+  color: #b2b2b2; font-size: 14px; pointer-events: none;
 }
 </style>
