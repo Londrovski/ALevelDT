@@ -114,9 +114,9 @@ function toggleLeftDrawer () { leftDrawerOpen.value = !leftDrawerOpen.value }
 .jm-nav-btn:hover { color: #ffffff !important; background: rgba(255,255,255,0.08) !important; }
 .jm-nav-btn.router-link-active { color: #32a9b1 !important; }
 .jm-icon-btn { color: #ffffff !important; }
-.jm-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.jm-brand { display: flex; align-items: center; gap: 20px; text-decoration: none; }
 .jm-logo { height: 44px; width: auto; filter: brightness(0) invert(1); }
-.jm-brand-name { font-weight: 700; font-size: 19px; color: #ffffff; letter-spacing: 0.01em; }
+.jm-brand-name { font-weight: 700; font-size: 35px; color: #ffffff; letter-spacing: 0.01em; }
 .jm-drawer { background: #ffffff !important; border-right: 1px solid #d8d8d8 !important; }
 .jm-drawer-logo { border-bottom: 1px solid #d8d8d8; }
 .jm-drawer-item { color: #333233 !important; }
