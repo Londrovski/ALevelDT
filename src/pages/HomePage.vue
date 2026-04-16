@@ -4,17 +4,22 @@
     <!-- Project intro -->
     <div class="jm-intro">
       <div class="jm-intro-inner">
-        <div class="jm-intro-label">A Level Design Technology — Major Project</div>
-        <h1 class="jm-intro-title">The Standing Desk</h1>
-        <p class="jm-intro-text">
-          A fully designed, prototyped and 3D-printed motorised standing desk conversion system —
-          built from scratch as part of my A Level DT major project. This site documents the
-          design process, component breakdowns, and build progression from first prototype
-          through to the final assembly.
-        </p>
-        <div class="jm-intro-cta">
-          <q-btn to="/full-project-3d-view" class="jm-btn-accent" label="Explore 3D Models" icon="view_in_ar" no-caps />
-          <q-btn to="/flipbooks" class="jm-btn-outline" label="View Sketchbook" icon="menu_book" no-caps outline />
+        <div class="jm-intro-text-col">
+          <div class="jm-intro-label">A Level Design Technology — Major Project</div>
+          <h1 class="jm-intro-title">The Standing Desk</h1>
+          <p class="jm-intro-text">
+            A fully designed, prototyped and 3D-printed motorised standing desk conversion system —
+            built from scratch as part of my A Level DT major project. This site documents the
+            design process, component breakdowns, and build progression from first prototype
+            through to the final assembly.
+          </p>
+          <div class="jm-intro-cta">
+            <q-btn to="/full-project-3d-view" class="jm-btn-accent" label="Explore 3D Models" icon="view_in_ar" no-caps />
+            <q-btn to="/flipbooks" class="jm-btn-outline" label="View Sketchbook" icon="menu_book" no-caps outline />
+          </div>
+        </div>
+        <div class="jm-intro-image-col">
+          <img src="/images/full-monty-render.png" alt="The Full Monty standing desk render" class="jm-intro-render" />
         </div>
       </div>
     </div>
@@ -22,7 +27,7 @@
     <!-- Slideshow -->
     <div class="jm-slideshow-wrap">
       <q-carousel
-        v-model="slide" animated arrows navigation infinite autoplay :autoplay-speed="7000"
+        v-model="slide" animated arrows navigation infinite :autoplay="7000"
         transition-prev="slide-right" transition-next="slide-left"
         class="jm-carousel"
       >
@@ -152,8 +157,11 @@ const books = [
 <style scoped>
 .jm-page { background: #f2f2f2; color: #333233; }
 
-.jm-intro { background: #ffffff; border-bottom: 1px solid #d8d8d8; padding: 48px 32px 52px; }
-.jm-intro-inner { max-width: 760px; margin: 0 auto; }
+.jm-intro { background: #ffffff; border-bottom: 1px solid #d8d8d8; padding: 48px 48px 52px; }
+.jm-intro-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 48px; }
+.jm-intro-text-col { flex: 1; min-width: 0; }
+.jm-intro-image-col { flex-shrink: 0; width: 380px; display: flex; align-items: center; justify-content: center; }
+.jm-intro-render { width: 100%; height: auto; display: block; }
 .jm-intro-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #32a9b1; margin-bottom: 12px; }
 .jm-intro-title { font-size: 40px; font-weight: 800; color: #333233; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.1; }
 .jm-intro-text { font-size: 17px; line-height: 1.7; color: #555455; margin-bottom: 28px; max-width: 640px; }
