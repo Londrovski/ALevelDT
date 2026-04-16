@@ -8,7 +8,7 @@
           <div class="jm-intro-label">A Level Design Technology — Major Project</div>
           <h1 class="jm-intro-title">The Standing Desk</h1>
           <p class="jm-intro-text">
-            A fully designed, prototyped and 3D-printed motorised standing desk conversion system —
+            A fully designed, prototyped and 3D-printed standing desk conversion system —
             built from scratch as part of my A Level DT major project. This site documents the
             design process, component breakdowns, and build progression from first prototype
             through to the final assembly.
