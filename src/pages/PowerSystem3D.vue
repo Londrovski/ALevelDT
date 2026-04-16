@@ -6,11 +6,11 @@
     </div>
     <div class="jm-viewers-wrap">
       <STLViewer label="Power Slide" url="/models/Power-Slide-1.stl" />
-    <STLViewer label="Power Track" url="/models/Power-Track-1.stl" />
-    <STLViewer label="Power Insert" url="/models/Power-Insert-1.stl" />
-    <STLViewer label="Two-Way Bevel Gear Hub Base" url="/models/Two-Way-Bevel-Gear-Hub-Base.stl" />
-    <STLViewer label="Two-Way Bevel Gear Hub Top" url="/models/Two-Way-Bevel-Gear-Hub-Top.stl" />
-    <STLViewer label="Leg" url="/models/Leg-1.stl" />
+      <STLViewer label="Power Track" url="/models/Power-Track-1.stl" />
+      <STLViewer label="Power Insert" url="/models/Power-Insert-1.stl" />
+      <STLViewer label="Two-Way Bevel Gear Hub Base" url="/models/Two-Way-Bevel-Gear-Hub-Base.stl" />
+      <STLViewer label="Two-Way Bevel Gear Hub Top" url="/models/Two-Way-Bevel-Gear-Hub-Top.stl" />
+      <STLViewer label="Leg" url="/models/Leg-1.stl" />
     </div>
   </q-page>
 </template>
@@ -36,6 +36,10 @@ import STLViewer from 'components/STLViewer.vue'
 }
 .jm-viewers-wrap {
   padding: 32px 48px 64px;
-  display: flex; flex-direction: column; gap: 32px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+@media (max-width: 600px) {
+  .jm-viewers-wrap { padding: 20px 16px 40px; }
+  .jm-page-header { padding: 24px 20px 20px; }
 }
 </style>
