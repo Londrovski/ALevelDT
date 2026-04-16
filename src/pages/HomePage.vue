@@ -1,48 +1,74 @@
 <template>
   <q-page class="jm-page">
-    <div class="jm-slideshow">
+
+    <!-- Project intro banner -->
+    <div class="jm-intro">
+      <div class="jm-intro-inner">
+        <div class="jm-intro-label">A Level Design Technology — Major Project</div>
+        <h1 class="jm-intro-title">The Standing Desk</h1>
+        <p class="jm-intro-text">
+          A fully designed, prototyped and 3D-printed motorised standing desk conversion system —
+          built from scratch as part of my A Level DT major project. This site documents the
+          design process, component breakdowns, and build progression from first prototype
+          through to the final assembly.
+        </p>
+        <div class="jm-intro-cta">
+          <q-btn to="/full-project-3d-view" class="jm-btn-accent" label="Explore 3D Models" icon="view_in_ar" no-caps />
+          <q-btn to="/flipbooks" class="jm-btn-outline" label="View Sketchbook" icon="menu_book" no-caps outline />
+        </div>
+      </div>
+    </div>
+
+    <!-- Slideshow -->
+    <div class="jm-slideshow-wrap">
       <q-carousel
-        v-model="slide"
-        animated arrows navigation infinite autoplay :autoplay-speed="4500"
+        v-model="slide" animated arrows navigation infinite autoplay :autoplay-speed="4500"
         transition-prev="slide-right" transition-next="slide-left"
         class="jm-carousel"
       >
         <q-carousel-slide
           v-for="(photo, i) in photos" :key="i" :name="i"
-          :img-src="photo.src"
-          class="jm-slide"
+          :img-src="photo.src" class="jm-slide"
         >
           <div class="jm-caption">{{ photo.label }}</div>
         </q-carousel-slide>
       </q-carousel>
     </div>
 
-    <div class="jm-about">
-      <h2 class="jm-section-title">About Me</h2>
-      <p class="jm-body-text">
-        I'm James Morris, Engineering Undergraduate at The University of Bath and Small Scale
-        Property Developer at Stortford Developments. When I was born my father bought this
-        domain to give me a personalised website &amp; email, but also to learn website building
-        and management skills. I had tinkered around with the website for a while but when I
-        completed my DT A Level Major Project I finally had a good use for it. Here I've been
-        able to upload digital flipbook versions of my Sketchbook and Manufacturing Pack,
-        interactive 3D views of the components I designed and 3D printed, and links to videos
-        I took along the way and uploaded to YouTube.
-      </p>
-      <div class="jm-cta-row">
-        <q-btn outline to="/full-project-3d-view" label="View 3D Models" icon="view_in_ar" class="jm-btn" />
-        <q-btn outline to="/videos" label="Watch Videos" icon="play_circle" class="jm-btn" />
+    <!-- About Me + Award photo -->
+    <div class="jm-about-section">
+      <div class="jm-about-inner">
+        <div class="jm-about-text">
+          <div class="jm-section-eyebrow">About Me</div>
+          <h2 class="jm-section-title">James Morris</h2>
+          <p class="jm-body">
+            I achieved 4 A*s at A Level and was awarded both the Design Technology and
+            Further Mathematics A Level prizes. I went on to study Mechanical Engineering
+            at the University of Bath.
+          </p>
+          <p class="jm-body">
+            This website showcases my DT A Level major project — an interactive record of
+            the design and engineering process, including digital flipbook versions of my
+            Sketchbook and Manufacturing Pack, interactive 3D views of the components I
+            designed and 3D printed, and video footage of the prototypes in action.
+          </p>
+          <div class="jm-about-cta">
+            <q-btn to="/videos" class="jm-btn-outline" label="Watch Build Videos" icon="play_circle" no-caps outline />
+          </div>
+        </div>
+        <div class="jm-about-image">
+          <img src="/images/james-alevel-award.jpg" alt="James Morris receiving his A Level award" class="jm-award-img" />
+          <div class="jm-award-caption">Receiving the DT A Level Prize</div>
+        </div>
       </div>
     </div>
+
   </q-page>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 const slide = ref(0)
-
-// Exact order and labels from the original site
-// Using the -e165... cropped versions that match what was shown in the slideshow
 const photos = [
   { src: '/images/PXL_20220324_135343336-scaled.jpg',   label: 'Final Prototype' },
   { src: '/images/PXL_20211111_113805146-scaled.jpg',   label: 'Mk 5.2 – First Track & Slide Design' },
@@ -60,36 +86,88 @@ const photos = [
 </script>
 
 <style scoped>
-.jm-page { background: #f4f2ef !important; color: #1e1e1e !important; }
-.jm-carousel { height: 70vh; min-height: 380px; background: #000; }
+.jm-page { background: #f2f2f2; color: #333233; }
+
+/* Intro banner */
+.jm-intro {
+  background: #ffffff;
+  border-bottom: 1px solid #d8d8d8;
+  padding: 48px 32px 52px;
+}
+.jm-intro-inner { max-width: 760px; margin: 0 auto; }
+.jm-intro-label {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #32a9b1; margin-bottom: 12px;
+}
+.jm-intro-title {
+  font-size: 40px; font-weight: 800; color: #333233;
+  margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.1;
+}
+.jm-intro-text {
+  font-size: 17px; line-height: 1.7; color: #555455;
+  margin-bottom: 28px; max-width: 640px;
+}
+.jm-intro-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.jm-btn-accent {
+  background: #32a9b1 !important; color: #fff !important;
+  font-weight: 600 !important; padding: 10px 20px !important;
+  border-radius: 4px !important;
+}
+.jm-btn-accent:hover { background: #248d94 !important; }
+.jm-btn-outline {
+  color: #32a9b1 !important; border-color: #32a9b1 !important;
+  font-weight: 600 !important; padding: 10px 20px !important;
+  border-radius: 4px !important;
+}
+
+/* Slideshow */
+.jm-slideshow-wrap { border-bottom: 1px solid #d8d8d8; }
+.jm-carousel { height: 65vh; min-height: 360px; background: #1a1a1a; }
 .jm-slide { background-size: cover; background-position: center; }
 .jm-caption {
   position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 10px 18px;
-  background: rgba(0,0,0,0.52);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.5);
+  color: #fff; font-size: 15px; font-weight: 500;
 }
-.jm-about {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 48px 32px 64px;
+
+/* About section */
+.jm-about-section {
+  background: #ffffff;
+  border-top: 1px solid #d8d8d8;
+  padding: 56px 32px 64px;
+}
+.jm-about-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; gap: 56px; align-items: flex-start;
+}
+.jm-about-text { flex: 1; min-width: 0; }
+.jm-section-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #32a9b1; margin-bottom: 8px;
 }
 .jm-section-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: #1e1e1e;
-  margin: 0 0 20px;
-  letter-spacing: -0.01em;
+  font-size: 28px; font-weight: 700; color: #333233;
+  margin: 0 0 20px; letter-spacing: -0.01em;
 }
-.jm-body-text {
-  font-size: 16px;
-  line-height: 1.75;
-  color: #3c3c38;
-  margin-bottom: 32px;
+.jm-body {
+  font-size: 16px; line-height: 1.75; color: #555455; margin-bottom: 16px;
 }
-.jm-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
-.jm-btn { color: #1e1e1e !important; border-color: #1e1e1e !important; font-weight: 500 !important; }
+.jm-about-cta { margin-top: 28px; }
+.jm-about-image { flex-shrink: 0; width: 280px; text-align: center; }
+.jm-award-img {
+  width: 100%; border-radius: 6px;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+.jm-award-caption {
+  font-size: 13px; color: #7c7c7c; margin-top: 10px; font-style: italic;
+}
+
+/* Responsive — stack on mobile */
+@media (max-width: 700px) {
+  .jm-about-inner { flex-direction: column-reverse; gap: 32px; }
+  .jm-about-image { width: 100%; max-width: 320px; margin: 0 auto; }
+  .jm-intro-title { font-size: 28px; }
+}
 </style>
