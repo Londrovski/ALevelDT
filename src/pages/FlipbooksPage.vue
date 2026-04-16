@@ -2,8 +2,8 @@
   <q-page class="jm-page">
     <div class="jm-page-header">
       <div class="jm-page-eyebrow">Documents</div>
-      <h1 class="jm-page-title">Flipbooks</h1>
-      <p class="jm-page-sub">Turn pages by clicking the edges or using the arrow controls. Click "Open in Drive" for the full document.</p>
+      <h1 class="jm-page-title">Sketchbook</h1>
+      <p class="jm-page-sub">Click "Open in Drive" to view the full document.</p>
     </div>
     <div class="jm-flipbook-list">
       <FlipbookViewer
@@ -31,9 +31,6 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
 <style scoped>
 .jm-page { background: #f2f2f2; color: #333233; min-height: 100vh; }
 .jm-page-header { background: #ffffff; padding: 32px 48px 28px; border-bottom: 1px solid #d8d8d8; }
-.jm-page-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #32a9b1; margin-bottom: 6px; }
-.jm-page-title { font-size: 28px; font-weight: 700; color: #333233; margin: 0 0 6px; }
-.jm-page-sub { font-size: 14px; color: #7c7c7c; margin: 0; }
 .jm-flipbook-list { padding: 32px 48px 64px; display: flex; flex-direction: column; gap: 40px; max-width: 1200px; }
 @media (max-width: 600px) { .jm-flipbook-list { padding: 20px 16px 40px; } .jm-page-header { padding: 24px 20px 20px; } }
 </style>
