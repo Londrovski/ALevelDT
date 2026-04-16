@@ -175,7 +175,7 @@ const books = [
 .jm-subsection-title { font-size: 17px; font-weight: 700; color: #333233; margin: 28px 0 10px; }
 .jm-body { font-size: 15px; line-height: 1.75; color: #555455; margin-bottom: 4px; }
 .jm-about-cta { margin-top: 28px; }
-.jm-about-image { flex-shrink: 0; width: 260px; text-align: center; }
+.jm-about-image { flex-shrink: 0; width: 260px; text-align: center; align-self: flex-start; padding-top: 120px; }
 .jm-award-img { width: 100%; border-radius: 6px; border: 1px solid #d8d8d8; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
 .jm-award-caption { font-size: 13px; color: #7c7c7c; margin-top: 10px; font-style: italic; }
 
