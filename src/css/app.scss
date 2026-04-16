@@ -1,4 +1,46 @@
-// Global styles
-body {
-  font-family: 'Inter', sans-serif;
+
+// Manufacturing Pack colour theme
+// Off-white warm background, charcoal text, subtle borders
+
+:root {
+  --jm-bg:        #f4f2ef;
+  --jm-bg-alt:    #eceae6;
+  --jm-border:    #d4d0c8;
+  --jm-text:      #1e1e1e;
+  --jm-text-soft: #555550;
+  --jm-accent:    #2c2c2c;
+  --jm-nav-bg:    #ffffff;
+  --jm-viewer-bg: #f0eeea;
 }
+
+body {
+  background: var(--jm-bg) !important;
+  color: var(--jm-text) !important;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+// Override Quasar dark classes we used - switch to light theme
+.q-page { background: var(--jm-bg) !important; color: var(--jm-text) !important; }
+.bg-grey-10 { background: var(--jm-bg) !important; }
+.bg-grey-9  { background: var(--jm-bg-alt) !important; }
+.text-white { color: var(--jm-text) !important; }
+.text-grey-3 { color: var(--jm-text-soft) !important; }
+.text-grey-4 { color: var(--jm-text-soft) !important; }
+.text-grey-5 { color: #888882 !important; }
+
+// Nav
+.q-header { background: var(--jm-nav-bg) !important; border-bottom: 1px solid var(--jm-border) !important; }
+.q-header .q-btn { color: var(--jm-text) !important; }
+.q-header .q-toolbar__title a { color: var(--jm-text) !important; }
+
+// Drawer
+.q-drawer { background: var(--jm-nav-bg) !important; border-right: 1px solid var(--jm-border) !important; }
+.q-item { color: var(--jm-text) !important; }
+.q-item-label { color: var(--jm-text-soft) !important; }
+.q-separator { background: var(--jm-border) !important; }
+
+// Cards on project pages
+.q-card { background: var(--jm-bg-alt) !important; border: 1px solid var(--jm-border) !important; color: var(--jm-text) !important; }
+
+// Buttons
+.q-btn[outline] { border-color: var(--jm-accent) !important; color: var(--jm-accent) !important; }
