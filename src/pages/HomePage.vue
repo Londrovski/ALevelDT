@@ -120,11 +120,11 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
 }
 .jm-hero-bg {
   position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
+  inset: -8% -8%;
+  width: 116%; height: 116%;
   object-fit: cover;
-  /* Shifted up and to the right — shows the gorgeous top of the desk */
-  object-position: 82% 8%;
+  /* Zoomed in and shifted right+up — fills the grey dead space */
+  object-position: 80% 12%;
 }
 .jm-hero-vignette {
   position: absolute;
