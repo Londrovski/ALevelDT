@@ -20,7 +20,7 @@
             <q-btn to="/flipbooks" class="jm-hero-btn-outline" no-caps label="Sketchbook" icon="menu_book" outline />
             <q-btn to="/photos" class="jm-hero-btn-outline" no-caps label="Pictures" icon="photo_library" outline />
           </div>
-          <div class="jm-hero-credit">JAMES MORRIS COLLETT</div>
+          <div class="jm-hero-credit">JAMES MORRIS</div>
         </div>
         <div class="jm-hero-banner-right">
           <img src="/images/site-logo.png" class="jm-hero-logomark" alt="JM" />
@@ -111,8 +111,8 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
 .jm-hero {
   position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 600px;
+  height: 85vh;
+  min-height: 520px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
