@@ -26,7 +26,11 @@ const props = defineProps({
 
 const container = ref(null)
 const loading   = ref(true)
+
+// All state is local — no shared variables between instances
 let renderer, scene, camera, controls, animId
+let visible = false   // only true when scrolled into view
+let observer
 
 function init () {
   const el = container.value
@@ -38,17 +42,13 @@ function init () {
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.5))
   const key = new THREE.DirectionalLight(0xffffff, 0.8)
-  key.position.set(3, 5, 4)
-  scene.add(key)
+  key.position.set(3, 5, 4); scene.add(key)
   const fill = new THREE.DirectionalLight(0xfff4e0, 0.3)
-  fill.position.set(-4, 2, -3)
-  scene.add(fill)
+  fill.position.set(-4, 2, -3); scene.add(fill)
   const rim = new THREE.DirectionalLight(0xe8f4ff, 0.35)
-  rim.position.set(0, -3, -5)
-  scene.add(rim)
+  rim.position.set(0, -3, -5); scene.add(rim)
   const top = new THREE.DirectionalLight(0xffffff, 0.2)
-  top.position.set(0, 8, 0)
-  scene.add(top)
+  top.position.set(0, 8, 0); scene.add(top)
 
   camera = new THREE.PerspectiveCamera(40, w / h, 0.01, 1000000)
 
@@ -57,7 +57,6 @@ function init () {
   renderer.setSize(w, h)
   el.appendChild(renderer.domElement)
 
-  // Simple always-on loop — most reliable for interaction
   controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
   controls.dampingFactor = 0.07
@@ -69,15 +68,13 @@ function init () {
     geo.boundingBox.getCenter(centre)
     geo.translate(-centre.x, -centre.y, -centre.z)
 
-    const mesh = new THREE.Mesh(geo, new THREE.MeshPhongMaterial({
+    scene.add(new THREE.Mesh(geo, new THREE.MeshPhongMaterial({
       color: 0x8a9ba8, specular: 0xffffff, shininess: 80, side: THREE.DoubleSide
-    }))
-    scene.add(mesh)
+    })))
 
     geo.computeBoundingSphere()
     const r = geo.boundingSphere.radius
-    const fovRad = camera.fov * Math.PI / 180
-    const dist = (r / Math.sin(fovRad / 2)) * props.zoomFactor
+    const dist = (r / Math.sin((camera.fov * Math.PI / 180) / 2)) * props.zoomFactor
     camera.position.set(dist * 0.6, dist * 0.4, dist)
     camera.near = dist * 0.001
     camera.far  = dist * 50
@@ -85,13 +82,23 @@ function init () {
     controls.target.set(0, 0, 0)
     controls.update()
     loading.value = false
+    // Render one frame immediately so the model appears
+    renderer.render(scene, camera)
   })
 
+  // Only run the loop when this viewer is on screen
+  observer = new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting
+    if (visible) animate()
+    else cancelAnimationFrame(animId)
+  }, { threshold: 0.1 })
+  observer.observe(el)
+
   window.addEventListener('resize', onResize)
-  animate()
 }
 
 function animate () {
+  if (!visible) return
   animId = requestAnimationFrame(animate)
   controls?.update()
   renderer?.render(scene, camera)
@@ -103,11 +110,14 @@ function onResize () {
   camera.aspect = w / props.height
   camera.updateProjectionMatrix()
   renderer.setSize(w, props.height)
+  renderer?.render(scene, camera)
 }
 
 onMounted(() => { if (container.value) init() })
 onBeforeUnmount(() => {
+  visible = false
   cancelAnimationFrame(animId)
+  observer?.disconnect()
   window.removeEventListener('resize', onResize)
   renderer?.dispose()
 })
