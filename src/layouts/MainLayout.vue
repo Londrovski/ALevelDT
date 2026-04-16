@@ -34,6 +34,7 @@
           </q-btn>
 
           <q-btn flat no-caps to="/flipbooks" label="Flipbooks" class="jm-nav-btn" />
+          <q-btn flat no-caps to="/photos" label="Pictures" class="jm-nav-btn" />
           <q-btn flat no-caps to="/videos" label="Videos" class="jm-nav-btn" />
         </div>
       </q-toolbar>
@@ -74,6 +75,10 @@
         <q-item clickable v-ripple to="/flipbooks" class="jm-drawer-item">
           <q-item-section avatar><q-icon name="menu_book" /></q-item-section>
           <q-item-section>Flipbooks</q-item-section>
+        </q-item>
+        <q-item clickable v-ripple to="/photos" class="jm-drawer-item">
+          <q-item-section avatar><q-icon name="photo_library" /></q-item-section>
+          <q-item-section>Pictures</q-item-section>
         </q-item>
         <q-item clickable v-ripple to="/videos" class="jm-drawer-item">
           <q-item-section avatar><q-icon name="play_circle" /></q-item-section>
