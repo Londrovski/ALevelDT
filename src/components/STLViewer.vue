@@ -18,9 +18,11 @@ import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 const props = defineProps({
-  label: { type: String, default: '' },
-  url:   { type: String, required: true },
-  height:{ type: Number, default: 500 }
+  label:  { type: String, default: '' },
+  url:    { type: String, required: true },
+  height: { type: Number, default: 500 },
+  // 1.4 = normal zoom-out (parts), 0.75 = closer (Full Monty)
+  zoomFactor: { type: Number, default: 1.4 }
 })
 
 const container = ref(null)
@@ -33,7 +35,7 @@ function init () {
   const h = props.height
 
   scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xfafafa)   // near-white — distinct from page bg
+  scene.background = new THREE.Color(0xfafafa)
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.7))
   const d1 = new THREE.DirectionalLight(0xffffff, 0.6)
@@ -67,7 +69,7 @@ function init () {
     geo.computeBoundingSphere()
     const r = geo.boundingSphere.radius
     const fovRad = camera.fov * Math.PI / 180
-    const dist = (r / Math.sin(fovRad / 2)) * 1.4
+    const dist = (r / Math.sin(fovRad / 2)) * props.zoomFactor
     camera.position.set(dist * 0.55, dist * 0.35, dist)
     camera.near = dist * 0.001
     camera.far  = dist * 50
