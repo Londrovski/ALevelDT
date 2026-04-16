@@ -1,21 +1,14 @@
 <template>
   <q-page class="jm-page">
 
-    <!-- ═══ HERO — full bleed render, teal banner, logo championed ═══ -->
+    <!-- ═══ HERO ═══ -->
     <div class="jm-hero">
       <img src="/images/full-monty-render.png" class="jm-hero-bg" alt="" />
-
-      <!-- Dark vignette so text is always readable -->
       <div class="jm-hero-vignette"></div>
 
-      <!-- Top-left logo mark — large and proud -->
-      <div class="jm-hero-logo">
-        <img src="/images/site-logo.png" class="jm-hero-logomark" alt="JM" />
-      </div>
-
-      <!-- Teal banner at the bottom — just like the PDF cover -->
+      <!-- Teal banner — logo on right, text on left -->
       <div class="jm-hero-banner">
-        <div class="jm-hero-banner-inner">
+        <div class="jm-hero-banner-left">
           <div class="jm-hero-eyebrow">A Level Design Technology — Major Project</div>
           <h1 class="jm-hero-title">The Standing Desk</h1>
           <p class="jm-hero-sub">
@@ -27,17 +20,22 @@
             <q-btn to="/flipbooks" class="jm-hero-btn-outline" no-caps label="Sketchbook" icon="menu_book" outline />
             <q-btn to="/photos" class="jm-hero-btn-outline" no-caps label="Pictures" icon="photo_library" outline />
           </div>
+          <div class="jm-hero-credit">JAMES MORRIS COLLETT</div>
         </div>
-        <div class="jm-hero-credit">JAMES MORRIS COLLETT</div>
+        <div class="jm-hero-banner-right">
+          <img src="/images/site-logo.png" class="jm-hero-logomark" alt="JM" />
+        </div>
       </div>
     </div>
 
-    <!-- ═══ ABOUT ME — large photo, text alongside ═══ -->
+    <!-- ═══ ABOUT ME ═══ -->
     <div class="jm-about-section">
       <div class="jm-about-inner">
         <div class="jm-about-photo-col">
-          <img src="/images/james-alevel-award.jpg" alt="James Morris" class="jm-about-photo" />
-          <div class="jm-about-photo-caption">Receiving the DT A Level Prize</div>
+          <div class="jm-about-photo-frame">
+            <img src="/images/james-alevel-award.jpg" alt="James Morris" class="jm-about-photo" />
+            <div class="jm-about-photo-caption">Receiving the DT A Level Prize</div>
+          </div>
         </div>
         <div class="jm-about-text-col">
           <div class="jm-section-eyebrow">About Me</div>
@@ -49,7 +47,6 @@
             at A Level and receiving both the DT and Further Maths A Level Prizes at the College,
             I went on to study Mechanical Engineering at the University of Bath.
           </p>
-
           <div class="jm-subsection-title">My Project</div>
           <p class="jm-body">
             I looked into a way of converting a standard school desk into a standing desk, for
@@ -60,7 +57,6 @@
             Adobe InDesign and Fusion 360. Overall I'm very happy with the project as a whole;
             I had a blast making it and am very proud of what I have produced.
           </p>
-
           <div class="jm-subsection-title">Doing It Differently</div>
           <p class="jm-body">
             For my project I wanted to do it a bit differently. I enjoy trying new technology
@@ -70,7 +66,6 @@
             as opposed to the classic chronological order of a sketchbook. This has definitely
             posed a challenge to my workflow but one I embraced and have enjoyed.
           </p>
-
           <div class="jm-about-cta">
             <q-btn to="/videos" class="jm-btn-outline" label="Watch Build Videos" icon="play_circle" no-caps outline />
           </div>
@@ -128,48 +123,49 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
   inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  /* Shifted up and to the right — shows the gorgeous top of the desk */
+  object-position: 70% 15%;
 }
 .jm-hero-vignette {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.15) 0%,
-    rgba(0,0,0,0.0)  35%,
-    rgba(0,0,0,0.35) 75%,
-    rgba(0,0,0,0.55) 100%
+    rgba(0,0,0,0.05) 0%,
+    rgba(0,0,0,0.0)  30%,
+    rgba(0,0,0,0.2)  70%,
+    rgba(0,0,0,0.4)  100%
   );
 }
-/* Logo mark — top-left, large, white */
-.jm-hero-logo {
-  position: absolute;
-  top: 28px; left: 32px;
-  z-index: 2;
-}
-.jm-hero-logomark {
-  height: 72px;
-  width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.95;
-}
 
-/* Teal banner — exact PDF cover style */
+/* Teal banner — text left, logo right */
 .jm-hero-banner {
   position: relative;
   z-index: 2;
   background: #32a9b1;
-  padding: 28px 48px 28px;
+  padding: 28px 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 32px;
 }
-.jm-hero-banner-inner { flex: 1; min-width: 0; }
+.jm-hero-banner-left { flex: 1; min-width: 0; }
+.jm-hero-banner-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 32px;
+  border-left: 1px solid rgba(255,255,255,0.25);
+}
+.jm-hero-logomark {
+  height: 80px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
 .jm-hero-eyebrow {
   font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: rgba(255,255,255,0.75);
-  margin-bottom: 6px;
+  text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 6px;
 }
 .jm-hero-title {
   font-size: 36px; font-weight: 800; color: #ffffff;
@@ -177,88 +173,75 @@ import FlipbookViewer from 'components/FlipbookViewer.vue'
 }
 .jm-hero-sub {
   font-size: 15px; color: rgba(255,255,255,0.85);
-  margin: 0 0 20px; max-width: 600px; line-height: 1.6;
+  margin: 0 0 18px; max-width: 580px; line-height: 1.6;
 }
-.jm-hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.jm-hero-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
 .jm-hero-btn-solid {
   background: #ffffff !important; color: #32a9b1 !important;
-  font-weight: 700 !important; border-radius: 4px !important;
-  padding: 9px 20px !important;
+  font-weight: 700 !important; border-radius: 4px !important; padding: 8px 18px !important;
 }
 .jm-hero-btn-solid:hover { background: #f0f0f0 !important; }
 .jm-hero-btn-outline {
-  color: #ffffff !important; border-color: rgba(255,255,255,0.7) !important;
-  font-weight: 600 !important; border-radius: 4px !important;
-  padding: 9px 20px !important;
+  color: #ffffff !important; border-color: rgba(255,255,255,0.65) !important;
+  font-weight: 600 !important; border-radius: 4px !important; padding: 8px 18px !important;
 }
-.jm-hero-btn-outline:hover { border-color: #ffffff !important; background: rgba(255,255,255,0.1) !important; }
+.jm-hero-btn-outline:hover { border-color: #fff !important; background: rgba(255,255,255,0.1) !important; }
 .jm-hero-credit {
-  flex-shrink: 0;
-  font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.7);
-  text-align: right; white-space: nowrap;
-  align-self: flex-end;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55);
 }
 
-/* ── ABOUT ── */
+/* ── ABOUT — photo centred vertically in section, no sticky ── */
 .jm-about-section {
   background: #ffffff;
-  padding: 72px 64px;
+  padding: 0 64px;
   border-bottom: 1px solid #d8d8d8;
+  min-height: 600px;
+  display: flex;
+  align-items: stretch;
 }
 .jm-about-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: flex; gap: 72px; align-items: flex-start;
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  display: flex; gap: 72px; align-items: center;
+  padding: 72px 0;
 }
 .jm-about-photo-col {
-  flex-shrink: 0; width: 320px; text-align: center;
-  position: sticky; top: 96px;
+  flex-shrink: 0; width: 300px;
+  display: flex; align-items: center; justify-content: center;
+  align-self: center;
 }
+.jm-about-photo-frame { text-align: center; }
 .jm-about-photo {
   width: 100%; border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.15);
   border: 1px solid #d8d8d8;
 }
-.jm-about-photo-caption {
-  font-size: 13px; color: #7c7c7c; margin-top: 12px; font-style: italic;
-}
+.jm-about-photo-caption { font-size: 13px; color: #7c7c7c; margin-top: 12px; font-style: italic; }
 .jm-about-text-col { flex: 1; min-width: 0; }
 .jm-section-eyebrow {
   font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
   text-transform: uppercase; color: #32a9b1; margin-bottom: 8px;
 }
-.jm-section-title {
-  font-size: 32px; font-weight: 800; color: #333233;
-  margin: 0 0 24px; letter-spacing: -0.02em;
-}
-.jm-subsection-title {
-  font-size: 17px; font-weight: 700; color: #333233; margin: 28px 0 10px;
-}
+.jm-section-title { font-size: 32px; font-weight: 800; color: #333233; margin: 0 0 24px; letter-spacing: -0.02em; }
+.jm-subsection-title { font-size: 17px; font-weight: 700; color: #333233; margin: 28px 0 10px; }
 .jm-body { font-size: 15px; line-height: 1.8; color: #555455; margin-bottom: 4px; }
 .jm-about-cta { margin-top: 32px; }
-.jm-btn-outline {
-  color: #32a9b1 !important; border-color: #32a9b1 !important;
-  font-weight: 600 !important; border-radius: 4px !important;
-}
+.jm-btn-outline { color: #32a9b1 !important; border-color: #32a9b1 !important; font-weight: 600 !important; border-radius: 4px !important; }
 
 /* ── FLIPBOOKS ── */
-.jm-flipbooks-section {
-  background: #f2f2f2; padding: 64px 64px 80px;
-}
+.jm-flipbooks-section { background: #f2f2f2; padding: 64px 64px 80px; }
 .jm-flip-intro { max-width: 600px; margin-bottom: 36px; }
-.jm-flipbook-list {
-  display: flex; flex-direction: column; gap: 40px; max-width: 1100px;
-}
+.jm-flipbook-list { display: flex; flex-direction: column; gap: 40px; max-width: 1100px; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 860px) {
-  .jm-about-inner { flex-direction: column; gap: 40px; }
-  .jm-about-photo-col { width: 100%; max-width: 340px; position: static; }
-  .jm-about-section { padding: 40px 24px; }
+  .jm-about-section { padding: 0 24px; }
+  .jm-about-inner { flex-direction: column; gap: 40px; padding: 48px 0; align-items: flex-start; }
+  .jm-about-photo-col { width: 100%; max-width: 280px; align-self: auto; }
   .jm-flipbooks-section { padding: 40px 20px 56px; }
-  .jm-hero-banner { padding: 24px 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .jm-hero-banner { padding: 24px; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .jm-hero-banner-right { border-left: none; border-top: 1px solid rgba(255,255,255,0.25); padding-left: 0; padding-top: 20px; }
   .jm-hero-title { font-size: 26px; }
-  .jm-hero-credit { align-self: flex-start; }
-  .jm-hero-logomark { height: 52px; }
+  .jm-hero-logomark { height: 56px; }
 }
 </style>
