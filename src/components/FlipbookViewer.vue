@@ -10,10 +10,11 @@
       </a>
     </div>
     <div class="jm-pdf-embed">
+      <!-- R2 URL → native browser PDF viewer (no size limit, no third-party renderer) -->
+      <!-- Fallback → Google Drive embed -->
       <iframe
         :src="embedSrc"
         class="jm-pdf-iframe"
-        allow="autoplay"
         frameborder="0"
       ></iframe>
     </div>
@@ -25,17 +26,17 @@ import { computed } from 'vue'
 
 const props = defineProps({
   driveUrl: { type: String, default: '' },
-  driveId:  { type: String, required: true },
+  driveId:  { type: String, default: '' },
   r2Url:    { type: String, default: '' },
   title:    { type: String, default: '' },
   desc:     { type: String, default: '' },
 })
 
-// If an R2 URL is provided, use the Google Docs viewer to render it inline
-// Otherwise fall back to the Google Drive embed
+// R2 URL served directly — Chrome/Firefox/Safari all render PDFs natively in iframes
+// Fall back to Drive embed if no R2 URL provided
 const embedSrc = computed(() =>
   props.r2Url
-    ? `https://docs.google.com/viewer?url=${encodeURIComponent(props.r2Url)}&embedded=true`
+    ? props.r2Url
     : `https://drive.google.com/file/d/${props.driveId}/preview`
 )
 </script>
