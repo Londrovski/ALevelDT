@@ -5,7 +5,7 @@
         <q-btn flat dense round icon="menu" @click="toggleLeftDrawer" class="lt-md jm-icon-btn" />
         <q-toolbar-title>
           <router-link to="/" class="jm-brand">
-            <img src="/images/site-logo.png" class="jm-logo" alt="JM" />
+            <img src="/images/site-logo-white.png" class="jm-logo" alt="JM" />
             <span class="jm-brand-name gt-sm">James Morris</span>
           </router-link>
         </q-toolbar-title>
@@ -80,21 +80,21 @@ function toggleLeftDrawer () { leftDrawerOpen.value = !leftDrawerOpen.value }
 
 <style scoped>
 .jm-header {
-  background: #ffffff !important;
-  border-bottom: 1px solid #d8d8d8 !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.07) !important;
+  background: #333233 !important;
+  border-bottom: none !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
 }
 .jm-nav-btn {
-  color: #333233 !important;
+  color: rgba(255,255,255,0.85) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
 }
-.jm-nav-btn:hover { background: rgba(50,169,177,0.08) !important; color: #32a9b1 !important; }
+.jm-nav-btn:hover { color: #ffffff !important; background: rgba(255,255,255,0.08) !important; }
 .jm-nav-btn.router-link-active { color: #32a9b1 !important; }
-.jm-icon-btn { color: #333233 !important; }
-.jm-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #333233 !important; }
-.jm-logo { height: 36px; width: auto; }
-.jm-brand-name { font-weight: 700; font-size: 16px; letter-spacing: 0.01em; color: #333233; }
+.jm-icon-btn { color: #ffffff !important; }
+.jm-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.jm-logo { height: 34px; width: auto; filter: brightness(0) invert(1); }
+.jm-brand-name { font-weight: 700; font-size: 16px; color: #ffffff; letter-spacing: 0.01em; }
 .jm-drawer { background: #ffffff !important; border-right: 1px solid #d8d8d8 !important; }
 .jm-drawer-logo { border-bottom: 1px solid #d8d8d8; }
 .jm-drawer-item { color: #333233 !important; }
