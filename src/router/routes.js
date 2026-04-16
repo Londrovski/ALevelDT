@@ -9,6 +9,7 @@ const routes = [
       { path: 'power-system-3d-view', component: () => import('pages/PowerSystem3D.vue') },
       { path: 'passive-system-3d-view', component: () => import('pages/PassiveSystem3D.vue') },
       { path: 'attachments-3d-view', component: () => import('pages/Attachments3D.vue') },
+      { path: 'flipbooks', component: () => import('pages/FlipbooksPage.vue') },
       { path: 'videos', component: () => import('pages/VideosPage.vue') }
     ]
   },
