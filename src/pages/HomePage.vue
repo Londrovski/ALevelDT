@@ -6,7 +6,6 @@
       <img src="/images/full-monty-render.png" class="jm-hero-bg" alt="" />
       <div class="jm-hero-vignette"></div>
 
-      <!-- Teal banner — logo on right, text on left -->
       <div class="jm-hero-banner">
         <div class="jm-hero-banner-left">
           <div class="jm-hero-eyebrow">A Level Design Technology — Major Project</div>
@@ -114,7 +113,6 @@ function scrollToAbout () {
 <style scoped>
 .jm-page { background: #f2f2f2; color: #333233; }
 
-/* ── HERO ── */
 .jm-hero {
   position: relative;
   width: 100%;
@@ -131,117 +129,52 @@ function scrollToAbout () {
   inset: 0;
   width: 100%; height: 100%;
   object-fit: contain;
-  /* Shifted up to 15% — removes dead space above desk, shows more of base */
-  object-position: center 15%;
+  object-position: center 5%;
 }
 .jm-hero-vignette {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.05) 0%,
-    rgba(0,0,0,0.0)  30%,
-    rgba(0,0,0,0.2)  70%,
-    rgba(0,0,0,0.4)  100%
-  );
+  background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0.4) 100%);
 }
-
-/* Teal banner — text left, logo right */
 .jm-hero-banner {
-  position: relative;
-  z-index: 2;
-  background: #32a9b1;
-  padding: 28px 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
+  position: relative; z-index: 2; background: #32a9b1;
+  padding: 28px 48px; display: flex; align-items: center;
+  justify-content: space-between; gap: 32px;
 }
 .jm-hero-banner-left { flex: 1; min-width: 0; }
 .jm-hero-banner-right {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  padding-left: 32px;
-  border-left: 1px solid rgba(255,255,255,0.25);
+  flex-shrink: 0; display: flex; align-items: center;
+  padding-left: 32px; border-left: 1px solid rgba(255,255,255,0.25);
 }
-.jm-hero-logomark {
-  height: 80px;
-  width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.95;
-}
-.jm-hero-eyebrow {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 6px;
-}
-.jm-hero-title {
-  font-size: 36px; font-weight: 800; color: #ffffff;
-  margin: 0 0 10px; letter-spacing: -0.02em; line-height: 1.05;
-}
-.jm-hero-sub {
-  font-size: 15px; color: rgba(255,255,255,0.85);
-  margin: 0 0 18px; max-width: 580px; line-height: 1.6;
-}
+.jm-hero-logomark { height: 80px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
+.jm-hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 6px; }
+.jm-hero-title { font-size: 36px; font-weight: 800; color: #ffffff; margin: 0 0 10px; letter-spacing: -0.02em; line-height: 1.05; }
+.jm-hero-sub { font-size: 15px; color: rgba(255,255,255,0.85); margin: 0 0 18px; max-width: 580px; line-height: 1.6; }
 .jm-hero-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
-.jm-hero-btn-solid {
-  background: #ffffff !important; color: #32a9b1 !important;
-  font-weight: 700 !important; border-radius: 4px !important; padding: 8px 18px !important;
-}
+.jm-hero-btn-solid { background: #ffffff !important; color: #32a9b1 !important; font-weight: 700 !important; border-radius: 4px !important; padding: 8px 18px !important; }
 .jm-hero-btn-solid:hover { background: #f0f0f0 !important; }
-.jm-hero-btn-outline {
-  color: #ffffff !important; border-color: rgba(255,255,255,0.65) !important;
-  font-weight: 600 !important; border-radius: 4px !important; padding: 8px 18px !important;
-}
+.jm-hero-btn-outline { color: #ffffff !important; border-color: rgba(255,255,255,0.65) !important; font-weight: 600 !important; border-radius: 4px !important; padding: 8px 18px !important; }
 .jm-hero-btn-outline:hover { border-color: #fff !important; background: rgba(255,255,255,0.1) !important; }
-.jm-hero-credit {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.55);
-}
+.jm-hero-credit { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
 
-/* ── ABOUT ── */
-.jm-about-section {
-  background: #ffffff;
-  padding: 0 64px;
-  border-bottom: 1px solid #d8d8d8;
-  min-height: 600px;
-  display: flex;
-  align-items: stretch;
-}
-.jm-about-inner {
-  max-width: 1100px; margin: 0 auto; width: 100%;
-  display: flex; gap: 72px; align-items: center;
-  padding: 72px 0;
-}
-.jm-about-photo-col {
-  flex-shrink: 0; width: 300px;
-  display: flex; align-items: center; justify-content: center;
-  align-self: center;
-}
+.jm-about-section { background: #ffffff; padding: 0 64px; border-bottom: 1px solid #d8d8d8; min-height: 600px; display: flex; align-items: stretch; }
+.jm-about-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: flex; gap: 72px; align-items: center; padding: 72px 0; }
+.jm-about-photo-col { flex-shrink: 0; width: 300px; display: flex; align-items: center; justify-content: center; align-self: center; }
 .jm-about-photo-frame { text-align: center; }
-.jm-about-photo {
-  width: 100%; border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  border: 1px solid #d8d8d8;
-}
+.jm-about-photo { width: 100%; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); border: 1px solid #d8d8d8; }
 .jm-about-photo-caption { font-size: 13px; color: #7c7c7c; margin-top: 12px; font-style: italic; }
 .jm-about-text-col { flex: 1; min-width: 0; }
-.jm-section-eyebrow {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: #32a9b1; margin-bottom: 8px;
-}
+.jm-section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #32a9b1; margin-bottom: 8px; }
 .jm-section-title { font-size: 32px; font-weight: 800; color: #333233; margin: 0 0 24px; letter-spacing: -0.02em; }
 .jm-subsection-title { font-size: 17px; font-weight: 700; color: #333233; margin: 28px 0 10px; }
 .jm-body { font-size: 15px; line-height: 1.8; color: #555455; margin-bottom: 4px; }
 .jm-about-cta { margin-top: 32px; }
 .jm-btn-outline { color: #32a9b1 !important; border-color: #32a9b1 !important; font-weight: 600 !important; border-radius: 4px !important; }
 
-/* ── FLIPBOOKS ── */
 .jm-flipbooks-section { background: #f2f2f2; padding: 64px 64px 80px; }
 .jm-flip-intro { max-width: 600px; margin-bottom: 36px; }
 .jm-flipbook-list { display: flex; flex-direction: column; gap: 40px; max-width: 1100px; }
 
-/* ── RESPONSIVE ── */
 @media (max-width: 860px) {
   .jm-about-section { padding: 0 24px; }
   .jm-about-inner { flex-direction: column; gap: 40px; padding: 48px 0; align-items: flex-start; }

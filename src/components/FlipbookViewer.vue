@@ -1,9 +1,9 @@
 <template>
-  <div class="jm-flipbook-wrap">
-    <div class="jm-flipbook-header">
+  <div class="jm-pdf-wrap">
+    <div class="jm-pdf-header">
       <div>
-        <div class="jm-flipbook-title">{{ title }}</div>
-        <div class="jm-flipbook-desc">{{ desc }}</div>
+        <div class="jm-pdf-title">{{ title }}</div>
+        <div class="jm-pdf-desc">{{ desc }}</div>
       </div>
       <a :href="driveUrl" target="_blank" class="jm-open-link">
         Open in Drive <q-icon name="open_in_new" size="13px" />
@@ -11,52 +11,46 @@
     </div>
 
     <!-- Loading -->
-    <div v-if="state === 'loading'" class="jm-fb-status">
+    <div v-if="state === 'loading'" class="jm-pdf-status">
       <q-circular-progress indeterminate color="teal" size="40px" />
-      <div class="jm-fb-status-text">Rendering pages… {{ loadedPages }}/{{ totalPages }}</div>
+      <div class="jm-pdf-status-text">Loading… {{ loadedPages }}/{{ totalPages }}</div>
     </div>
 
-    <!-- Error — fall back to Drive embed -->
-    <div v-else-if="state === 'error'" class="jm-fb-drive">
-      <div class="jm-fb-drive-note">Viewing in Google Drive preview</div>
-      <iframe
-        :src="`https://drive.google.com/file/d/${driveId}/preview`"
-        class="jm-fb-iframe"
-        allow="autoplay"
-        frameborder="0"
-      ></iframe>
+    <!-- Error — Drive embed fallback -->
+    <div v-else-if="state === 'error'" class="jm-pdf-drive">
+      <div class="jm-pdf-drive-note">Viewing via Google Drive</div>
+      <iframe :src="`https://drive.google.com/file/d/${driveId}/preview`" class="jm-pdf-iframe" allow="autoplay" frameborder="0"></iframe>
     </div>
 
-    <!-- Flipbook viewer -->
-    <div v-else-if="state === 'ready'" class="jm-fb-stage">
-      <div class="jm-fb-info">
-        <span class="jm-fb-page-label">Page {{ viewPage + 1 }} of {{ pages.length }}</span>
-        <span class="jm-fb-hint">Click edges to turn · Use arrows below</span>
+    <!-- Spread viewer -->
+    <div v-else-if="state === 'ready'" class="jm-pdf-stage">
+      <div class="jm-pdf-info">
+        <span class="jm-pdf-page-label">{{ spreadLabel }}</span>
+        <span class="jm-pdf-hint">Use arrows to turn pages</span>
       </div>
 
-      <!-- Book container — two pages side by side with 3D flip -->
-      <div class="jm-book-wrap" :style="{ perspective: '2000px' }">
-        <div class="jm-book">
-          <!-- Left page -->
-          <div class="jm-page jm-page--left" @click="prevPage">
-            <img v-if="pages[viewPage]" :src="pages[viewPage]" class="jm-page-img" />
-            <div class="jm-page-corner jm-page-corner--left">‹</div>
-          </div>
-          <!-- Right page -->
-          <div class="jm-page jm-page--right" @click="nextPage">
-            <img v-if="pages[viewPage + 1]" :src="pages[viewPage + 1]" class="jm-page-img" />
-            <div v-else class="jm-page-blank"></div>
-            <div class="jm-page-corner jm-page-corner--right">›</div>
-          </div>
+      <!-- Spread: cover alone, then pairs -->
+      <div class="jm-spread">
+        <!-- Left page: blank on cover, previous even page otherwise -->
+        <div class="jm-spread-page jm-spread-page--left">
+          <img v-if="leftPage !== null" :src="pages[leftPage]" class="jm-spread-img" />
+          <div v-else class="jm-spread-blank"></div>
+        </div>
+        <!-- Spine -->
+        <div class="jm-spread-spine"></div>
+        <!-- Right page -->
+        <div class="jm-spread-page jm-spread-page--right">
+          <img v-if="rightPage !== null" :src="pages[rightPage]" class="jm-spread-img" />
+          <div v-else class="jm-spread-blank"></div>
         </div>
       </div>
 
       <!-- Controls -->
-      <div class="jm-fb-controls">
-        <q-btn flat icon="first_page" @click="goFirst" class="jm-fb-btn" :disable="viewPage === 0" />
-        <q-btn flat icon="chevron_left" @click="prevPage" class="jm-fb-btn" :disable="viewPage === 0" />
-        <q-btn flat icon="chevron_right" @click="nextPage" class="jm-fb-btn" :disable="viewPage >= pages.length - 2" />
-        <q-btn flat icon="last_page" @click="goLast" class="jm-fb-btn" :disable="viewPage >= pages.length - 2" />
+      <div class="jm-pdf-controls">
+        <q-btn flat icon="first_page" @click="goFirst" class="jm-pdf-btn" :disable="spreadIndex === 0" />
+        <q-btn flat icon="chevron_left" @click="prevSpread" class="jm-pdf-btn" :disable="spreadIndex === 0" />
+        <q-btn flat icon="chevron_right" @click="nextSpread" class="jm-pdf-btn" :disable="spreadIndex >= maxSpread" />
+        <q-btn flat icon="last_page" @click="goLast" class="jm-pdf-btn" :disable="spreadIndex >= maxSpread" />
       </div>
     </div>
   </div>
@@ -76,10 +70,34 @@ const props = defineProps({
 const state       = ref('loading')
 const totalPages  = ref(0)
 const loadedPages = ref(0)
-const pages       = ref([])   // base64 data URLs per page
-const viewPage    = ref(0)    // always even — left page index
+const pages       = ref([])       // data URLs per page (0-indexed)
+const spreadIndex = ref(0)        // 0 = cover, 1 = spread 2-3, 2 = spread 4-5 …
 
-function loadScript(src) {
+// Layout:
+//  spread 0 → blank | page 0  (cover alone)
+//  spread 1 → page 1 | page 2
+//  spread 2 → page 3 | page 4
+//  ...
+const leftPage  = computed(() => spreadIndex.value === 0 ? null : (spreadIndex.value - 1) * 2 + 1)
+const rightPage = computed(() => {
+  if (spreadIndex.value === 0) return 0
+  const r = (spreadIndex.value - 1) * 2 + 2
+  return r < pages.value.length ? r : null
+})
+const maxSpread = computed(() => Math.ceil((pages.value.length - 1) / 2))
+const spreadLabel = computed(() => {
+  if (spreadIndex.value === 0) return 'Cover'
+  const l = leftPage.value + 1
+  const r = rightPage.value !== null ? rightPage.value + 1 : null
+  return r ? `Pages ${l} – ${r}` : `Page ${l}`
+})
+
+function goFirst    () { spreadIndex.value = 0 }
+function goLast     () { spreadIndex.value = maxSpread.value }
+function nextSpread () { if (spreadIndex.value < maxSpread.value) spreadIndex.value++ }
+function prevSpread () { if (spreadIndex.value > 0) spreadIndex.value-- }
+
+function loadScript (src) {
   return new Promise((res, rej) => {
     if (document.querySelector(`script[src="${src}"]`)) { res(); return }
     const s = document.createElement('script')
@@ -88,7 +106,7 @@ function loadScript(src) {
   })
 }
 
-async function init() {
+async function init () {
   try {
     await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js')
     window.pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -97,10 +115,9 @@ async function init() {
     const pdf = await window.pdfjsLib.getDocument({ url: props.pdfUrl, withCredentials: false }).promise
     totalPages.value = pdf.numPages
 
-    // Render at a good resolution — 1.8 scale gives sharp pages
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i)
-      const vp = page.getViewport({ scale: 1.8 })
+      const vp = page.getViewport({ scale: 1.6 })
       const canvas = document.createElement('canvas')
       canvas.width = vp.width; canvas.height = vp.height
       await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise
@@ -109,111 +126,96 @@ async function init() {
     }
     state.value = 'ready'
   } catch (e) {
-    console.warn('Flipbook PDF load failed:', e)
+    console.warn('PDF load failed:', e)
     state.value = 'error'
   }
 }
 
-function nextPage() {
-  if (viewPage.value < pages.value.length - 2) viewPage.value += 2
+function onKey (e) {
+  if (e.key === 'ArrowRight') nextSpread()
+  if (e.key === 'ArrowLeft')  prevSpread()
 }
-function prevPage() {
-  if (viewPage.value > 0) viewPage.value -= 2
-}
-function goFirst() { viewPage.value = 0 }
-function goLast()  { viewPage.value = pages.value.length % 2 === 0 ? pages.value.length - 2 : pages.value.length - 1 }
-
-function onKey(e) {
-  if (e.key === 'ArrowRight') nextPage()
-  if (e.key === 'ArrowLeft')  prevPage()
-}
-onMounted(() => { init(); window.addEventListener('keydown', onKey) })
+onMounted  (() => { init(); window.addEventListener('keydown', onKey) })
 onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 </script>
 
 <style scoped>
-.jm-flipbook-wrap {
-  background: #ffffff; border: 1px solid #d8d8d8; border-radius: 6px; overflow: hidden;
-}
-.jm-flipbook-header {
+.jm-pdf-wrap { background: #ffffff; border: 1px solid #d8d8d8; border-radius: 6px; overflow: hidden; }
+.jm-pdf-header {
   display: flex; justify-content: space-between; align-items: flex-start;
   padding: 20px 24px 16px; border-bottom: 1px solid #ebebeb;
 }
-.jm-flipbook-title { font-size: 18px; font-weight: 700; color: #333233; margin-bottom: 4px; }
-.jm-flipbook-desc  { font-size: 13px; color: #7c7c7c; }
+.jm-pdf-title { font-size: 18px; font-weight: 700; color: #333233; margin-bottom: 4px; }
+.jm-pdf-desc  { font-size: 13px; color: #7c7c7c; }
 .jm-open-link {
   font-size: 13px; font-weight: 600; color: #32a9b1; text-decoration: none;
   white-space: nowrap; margin-left: 16px; display: flex; align-items: center; gap: 4px;
 }
 .jm-open-link:hover { color: #248d94; }
 
-/* Loading / status */
-.jm-fb-status {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 14px; padding: 56px 24px; background: #f9f9f9;
-}
-.jm-fb-status-text { font-size: 14px; color: #7c7c7c; }
+.jm-pdf-status { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 56px 24px; background: #f9f9f9; }
+.jm-pdf-status-text { font-size: 14px; color: #7c7c7c; }
 
-/* Drive embed fallback */
-.jm-fb-drive { padding: 0; }
-.jm-fb-drive-note {
-  font-size: 12px; color: #b2b2b2; padding: 8px 16px; background: #f9f9f9;
-  border-bottom: 1px solid #ebebeb; text-align: center;
-}
-.jm-fb-iframe { display: block; width: 100%; height: 78vh; min-height: 500px; border: none; }
+.jm-pdf-drive { padding: 0; }
+.jm-pdf-drive-note { font-size: 12px; color: #b2b2b2; padding: 8px 16px; background: #f9f9f9; border-bottom: 1px solid #ebebeb; text-align: center; }
+.jm-pdf-iframe { display: block; width: 100%; height: 78vh; min-height: 500px; border: none; }
 
-/* Flipbook stage */
-.jm-fb-stage { background: #2a2a2a; padding: 20px 0 12px; }
-.jm-fb-info {
-  display: flex; justify-content: center; align-items: center; gap: 20px;
-  margin-bottom: 16px;
+/* Stage */
+.jm-pdf-stage { background: #3a3a3a; padding: 20px 0 0; }
+.jm-pdf-info {
+  display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 16px;
 }
-.jm-fb-page-label { font-size: 13px; font-weight: 600; color: #ccc; }
-.jm-fb-hint { font-size: 11px; color: #666; }
+.jm-pdf-page-label { font-size: 13px; font-weight: 600; color: #ccc; }
+.jm-pdf-hint { font-size: 11px; color: #666; }
 
-/* Book — two pages side by side */
-.jm-book-wrap { display: flex; justify-content: center; align-items: center; }
-.jm-book {
+/* Spread — two pages side by side */
+.jm-spread {
   display: flex;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  border-radius: 2px 2px 2px 2px;
-  max-width: 90vw;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0;
+  max-width: 100%;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  margin: 0 32px;
 }
-.jm-page {
-  position: relative; overflow: hidden; cursor: pointer;
+.jm-spread-page {
+  flex: 1;
+  max-width: 50%;
   background: #fff;
-  transition: transform 0.08s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.jm-page--left {
-  border-right: 2px solid #d0ccc8;
-  border-radius: 3px 0 0 3px;
-  box-shadow: inset -8px 0 20px rgba(0,0,0,0.08);
+.jm-spread-page--left {
+  box-shadow: inset -4px 0 12px rgba(0,0,0,0.12);
 }
-.jm-page--right {
-  border-left: 1px solid #e8e4e0;
-  border-radius: 0 3px 3px 0;
-  box-shadow: inset 8px 0 20px rgba(0,0,0,0.05);
+.jm-spread-page--right {
+  box-shadow: inset 4px 0 12px rgba(0,0,0,0.08);
 }
-.jm-page:hover { transform: scaleX(0.985); }
-.jm-page--left:hover { transform-origin: right center; }
-.jm-page--right:hover { transform-origin: left center; }
-.jm-page-img { display: block; width: 100%; height: auto; max-height: 75vh; object-fit: contain; }
-.jm-page-blank { width: 100%; height: 75vh; background: #fafafa; }
+.jm-spread-spine {
+  width: 6px;
+  flex-shrink: 0;
+  background: linear-gradient(to right, #aaa, #ddd, #aaa);
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+.jm-spread-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 76vh;
+  object-fit: contain;
+}
+.jm-spread-blank {
+  width: 100%;
+  height: 76vh;
+  background: #f8f8f8;
+}
 
-/* Corner fold hint */
-.jm-page-corner {
-  position: absolute; bottom: 0; font-size: 28px; font-weight: 300;
-  color: rgba(50,169,177,0.5); line-height: 1;
-  transition: color 0.15s;
+.jm-pdf-controls {
+  display: flex; justify-content: center; gap: 4px;
+  padding: 14px 0 10px;
 }
-.jm-page-corner--left { left: 12px; }
-.jm-page-corner--right { right: 12px; }
-.jm-page:hover .jm-page-corner { color: #32a9b1; }
-
-/* Controls */
-.jm-fb-controls {
-  display: flex; justify-content: center; gap: 4px; padding: 12px 0 8px;
-}
-.jm-fb-btn { color: #aaa !important; }
-.jm-fb-btn:hover { color: #32a9b1 !important; }
+.jm-pdf-btn { color: #aaa !important; }
+.jm-pdf-btn:hover { color: #32a9b1 !important; }
 </style>

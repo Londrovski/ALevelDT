@@ -36,42 +36,39 @@ function init () {
   scene = new THREE.Scene()
   scene.background = new THREE.Color(0xf5f5f5)
 
-  // ── CAD-quality lighting ──
-  // Soft ambient — fill shadows so they're not pitch black
-  scene.add(new THREE.AmbientLight(0xffffff, 0.45))
+  // CAD lighting — key, fill, rim, top
+  const ambient = new THREE.AmbientLight(0xffffff, 0.5)
+  scene.add(ambient)
 
-  // Key light — main illumination from top-front-right
-  const key = new THREE.DirectionalLight(0xffffff, 0.85)
+  const key = new THREE.DirectionalLight(0xffffff, 0.8)
   key.position.set(3, 5, 4)
   scene.add(key)
 
-  // Fill light — opposite side, much softer, slight warm tint
   const fill = new THREE.DirectionalLight(0xfff4e0, 0.3)
   fill.position.set(-4, 2, -3)
   scene.add(fill)
 
-  // Rim / back light — picks out edges and separation from background
-  const rim = new THREE.DirectionalLight(0xe8f4ff, 0.4)
+  const rim = new THREE.DirectionalLight(0xe8f4ff, 0.35)
   rim.position.set(0, -3, -5)
   scene.add(rim)
 
-  // Top light — brightens upper faces (like studio ceiling)
-  const top = new THREE.DirectionalLight(0xffffff, 0.25)
+  const top = new THREE.DirectionalLight(0xffffff, 0.2)
   top.position.set(0, 8, 0)
   scene.add(top)
 
   camera = new THREE.PerspectiveCamera(40, w / h, 0.01, 1000000)
 
-  renderer = new THREE.WebGLRenderer({ antialias: true })
-  renderer.setPixelRatio(window.devicePixelRatio)
+  // Use WebGL1 renderer for much better performance / compatibility
+  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' })
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setSize(w, h)
-  renderer.shadowMap.enabled = true
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap
   el.appendChild(renderer.domElement)
 
   controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
   controls.dampingFactor = 0.07
+  // Disable auto-rotate — was causing continuous redraws
+  controls.autoRotate = false
 
   new STLLoader().load(props.url, (geo) => {
     geo.computeBoundingBox()
@@ -80,36 +77,16 @@ function init () {
     geo.boundingBox.getCenter(centre)
     geo.translate(-centre.x, -centre.y, -centre.z)
 
-    // Mid-tone grey with good specularity — looks like machined aluminium/plastic
-    // MeshPhongMaterial gives the classic CAD look with specular highlights
     const mat = new THREE.MeshPhongMaterial({
-      color:     0x8a9ba8,   // cool blue-grey — classic CAD/SLA print look
+      color:     0x8a9ba8,
       specular:  0xffffff,
       shininess: 80,
       side: THREE.DoubleSide,
     })
 
     const mesh = new THREE.Mesh(geo, mat)
-    mesh.castShadow = true
     scene.add(mesh)
 
-    // Optional subtle ground plane to show shadow
-    geo.computeBoundingBox()
-    const boxH = geo.boundingBox.max.y - geo.boundingBox.min.y
-    const groundY = -(boxH / 2) - 0.5
-    const ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(10000, 10000),
-      new THREE.ShadowMaterial({ opacity: 0.08 })
-    )
-    ground.rotation.x = -Math.PI / 2
-    ground.position.y = groundY
-    ground.receiveShadow = true
-    scene.add(ground)
-    key.castShadow = true
-    key.shadow.mapSize.set(1024, 1024)
-    key.target = mesh
-
-    // Fit camera
     geo.computeBoundingSphere()
     const r = geo.boundingSphere.radius
     const fovRad = camera.fov * Math.PI / 180
@@ -121,14 +98,31 @@ function init () {
     controls.target.set(0, 0, 0)
     controls.update()
     loading.value = false
+
+    // Switch to on-demand rendering once loaded — only redraw when controls change
+    controls.addEventListener('change', render)
+    controls.addEventListener('start', startLoop)
+    controls.addEventListener('end', stopLoop)
+    render()
+    cancelAnimationFrame(animId)
   })
 
   window.addEventListener('resize', onResize)
-  animate()
+  animate() // initial loop until model loads
 }
 
+let looping = true
+function startLoop () { looping = true; animate() }
+function stopLoop  () { looping = false }
+
 function animate () {
+  if (!looping) return
   animId = requestAnimationFrame(animate)
+  controls?.update()
+  renderer?.render(scene, camera)
+}
+
+function render () {
   controls?.update()
   renderer?.render(scene, camera)
 }
@@ -139,10 +133,12 @@ function onResize () {
   camera.aspect = w / props.height
   camera.updateProjectionMatrix()
   renderer.setSize(w, props.height)
+  render()
 }
 
 onMounted(() => { if (container.value) init() })
 onBeforeUnmount(() => {
+  looping = false
   cancelAnimationFrame(animId)
   window.removeEventListener('resize', onResize)
   renderer?.dispose()
@@ -150,12 +146,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.jm-viewer-block {
-  background: #ffffff; border: 1px solid #b2b2b2; border-radius: 6px; overflow: hidden;
-}
-.jm-viewer-header {
-  padding: 18px 22px 14px; border-bottom: 1px solid #e8e8e8; background: #ffffff;
-}
+.jm-viewer-block { background: #ffffff; border: 1px solid #b2b2b2; border-radius: 6px; overflow: hidden; }
+.jm-viewer-header { padding: 18px 22px 14px; border-bottom: 1px solid #e8e8e8; background: #ffffff; }
 .jm-viewer-label { font-size: 20px; font-weight: 700; color: #333233; letter-spacing: -0.01em; }
 .jm-viewer-hint  { font-size: 12px; color: #b2b2b2; margin-top: 3px; }
 .jm-canvas-wrap  { position: relative; }
