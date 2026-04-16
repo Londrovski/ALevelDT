@@ -16,6 +16,7 @@
             <q-btn to="/full-project-3d-view" class="jm-hero-btn-solid" no-caps label="3D Models" icon="view_in_ar" />
             <q-btn to="/sketchbook" class="jm-hero-btn-outline" no-caps label="Sketchbook" icon="menu_book" outline />
             <q-btn to="/photos" class="jm-hero-btn-outline" no-caps label="Pictures" icon="photo_library" outline />
+            <q-btn to="/videos" class="jm-hero-btn-outline" no-caps label="Videos" icon="play_circle" outline />
             <q-btn class="jm-hero-btn-outline" no-caps label="About Me" icon="person" outline @click="scrollToAbout" />
           </div>
           <div class="jm-hero-credit">JAMES MORRIS</div>
@@ -120,7 +121,6 @@ function scrollToAbout () {
   overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
   background: #d0cecc;
 }
-/* Mobile: 70% of 92vh ≈ 64vh */
 @media (max-width: 860px) {
   .jm-hero { height: 64vh; min-height: 320px; }
 }
@@ -165,25 +165,18 @@ function scrollToAbout () {
 /* ─ ABOUT ─ */
 .jm-about-section { background: #ffffff; padding: 0 64px; border-bottom: 1px solid #d8d8d8; min-height: 600px; display: flex; align-items: stretch; }
 .jm-about-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: flex; gap: 72px; align-items: center; padding: 72px 0; }
-/* Desktop photo col */
 .jm-about-photo-col { flex-shrink: 0; width: 300px; display: flex; align-items: center; justify-content: center; align-self: center; }
 .jm-about-photo-frame { text-align: center; }
 .jm-about-photo { width: 100%; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); border: 1px solid #d8d8d8; }
 .jm-about-photo-caption { font-size: 13px; color: #7c7c7c; margin-top: 12px; font-style: italic; }
-/* Mobile inline photo — hidden on desktop */
 .jm-about-photo-mobile { display: none; }
 @media (max-width: 860px) {
   .jm-about-section { padding: 0 20px; min-height: unset; }
   .jm-about-inner { flex-direction: column; gap: 24px; padding: 40px 0; align-items: flex-start; }
-  /* Hide the desktop sidebar photo col on mobile */
   .jm-about-photo-col { display: none; }
-  /* Show inline photo between first para and My Project */
   .jm-about-photo-mobile {
-    display: block;
-    text-align: center;
-    margin: 20px auto;
-    width: 75%;
-    max-width: 280px;
+    display: block; text-align: center;
+    margin: 20px auto; width: 75%; max-width: 280px;
   }
   .jm-about-photo-mobile .jm-about-photo { width: 100%; }
 }
