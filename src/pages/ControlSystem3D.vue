@@ -6,12 +6,12 @@
     </div>
     <div class="jm-viewers-wrap">
       <STLViewer label="Handle" url="/models/Handle.stl" />
-    <STLViewer label="Drive Shaft Bracket 1" url="/models/Drive-Shaft-Bracket-1-1.stl" />
-    <STLViewer label="Drive Shaft Bracket 2" url="/models/Drive-Shaft-Bracket-2-1.stl" />
-    <STLViewer label="Three-Way Bevel Gear Hub Base" url="/models/Three-Way-Bevel-Gear-Hub-Base.stl" />
-    <STLViewer label="Three-Way Bevel Gear Hub Top" url="/models/Three-Way-Bevel-Gear-Hub-Top.stl" />
-    <STLViewer label="Bevel Gear – Square" url="/models/Bevel-Gear-Square-1.stl" />
-    <STLViewer label="Bevel Gear – Hex" url="/models/Bevel-Gear-Hex-1.stl" />
+      <STLViewer label="Drive Shaft Bracket 1" url="/models/Drive-Shaft-Bracket-1-1.stl" />
+      <STLViewer label="Drive Shaft Bracket 2" url="/models/Drive-Shaft-Bracket-2-1.stl" />
+      <STLViewer label="Three-Way Bevel Gear Hub Base" url="/models/Three-Way-Bevel-Gear-Hub-Base.stl" />
+      <STLViewer label="Three-Way Bevel Gear Hub Top" url="/models/Three-Way-Bevel-Gear-Hub-Top.stl" />
+      <STLViewer label="Bevel Gear – Square" url="/models/Bevel-Gear-Square-1.stl" />
+      <STLViewer label="Bevel Gear – Hex" url="/models/Bevel-Gear-Hex-1.stl" />
     </div>
   </q-page>
 </template>
@@ -37,6 +37,10 @@ import STLViewer from 'components/STLViewer.vue'
 }
 .jm-viewers-wrap {
   padding: 32px 48px 64px;
-  display: flex; flex-direction: column; gap: 32px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+@media (max-width: 600px) {
+  .jm-viewers-wrap { padding: 20px 16px 40px; }
+  .jm-page-header { padding: 24px 20px 20px; }
 }
 </style>
